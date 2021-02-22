@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1075586689029",
+    "project_id": "loja-flor-de-gato",
+    "storage_bucket": "loja-flor-de-gato.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075586689029:android:5db08d784ebab33ac7946c",
+        "android_client_info": {
+          "package_name": "br.com.darlo.flor_de_gato"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075586689029-daoq8rhbon0jk2o01slhlkdt9qipbupp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFm2UzX2j-BvmsreeNfATSih12zRDdiLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075586689029-daoq8rhbon0jk2o01slhlkdt9qipbupp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
