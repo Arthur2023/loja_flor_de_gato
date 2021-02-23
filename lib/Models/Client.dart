@@ -1,28 +1,40 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 
-class Client {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+
+class Client extends ChangeNotifier{
   String id;
   String name;
   String phone;
   String email;
   String address;
   String cpf;
+  String image;
+
+  File file;
 
   @override
   String toString() {
-    return 'Client{id: $id, name: $name, phone: $phone, email: $email, address: $address, cpf: $cpf}';
+    return 'Client{id: $id, name: $name, phone: $phone, email: $email, address: $address, cpf: $cpf, image: $image}';
+  }
+
+  void changeImage(File img){
+    file = img;
+    notifyListeners();
   }
 
   Client(this.name, this.phone,
-      {this.email = "", this.address = "", this.cpf = "", this.id});
+      {this.email = "", this.address = "", this.cpf = "", this.id, this.image});
 
   Client.fromDocumment(DocumentSnapshot documentSnapshot) {
-    id = documentSnapshot.documentID;
-    name = documentSnapshot.data["name"];
-    email = documentSnapshot.data["email"];
-    phone = documentSnapshot.data["phone"];
-    address = documentSnapshot.data["address"];
-    cpf = documentSnapshot.data["cpf"];
+    id = documentSnapshot.id;
+    name = documentSnapshot.data()["name"];
+    email = documentSnapshot.data()["email"];
+    phone = documentSnapshot.data()["phone"];
+    address = documentSnapshot.data()["address"];
+    cpf = documentSnapshot.data()["cpf"];
+    image = documentSnapshot.data()["image"];
   }
 
   Map<String, dynamic> toMap() {
@@ -32,6 +44,7 @@ class Client {
       "phone": phone,
       "address": address,
       "cpf": cpf,
+      "image": image,
     };
   }
 
@@ -43,6 +56,7 @@ class Client {
       address: this.address,
       cpf: this.cpf,
       id: this.id,
+      image: this.image
     );
   }
 
@@ -53,5 +67,7 @@ class Client {
     email = client.email;
     address = client.address;
     cpf = client.cpf;
+    image = client.image;
+
   }
 }

@@ -29,13 +29,20 @@ class ListClientTile extends StatelessWidget {
           color: Color(0xFFFEDBD0),
           child: Row(
             children: <Widget>[
-              Container(
-                width: 80,
-                height: 80,
-                child: Icon(
-                  Icons.account_circle_rounded,
-                  color: Color(0xFF442C2E),
-                  size: 60,
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: client.image != null
+                            ? NetworkImage(client.image)
+                            : AssetImage("images/contact.png"),
+                        fit: BoxFit.cover
+                    ),
+                  ),
                 ),
               ),
               Padding(

@@ -5,21 +5,27 @@ class Product {
   String name;
   String mark;
   String color;
-  String quantity;
-  String price;
+  String categoryID;
+  num quantity;
+  num price;
+  String shopping;
 
-  Product(this.name, this.mark, this.color);
+  Product(this.name, this.mark, this.color, this.quantity, this.price, this.shopping);
 
   @override
   String toString() {
-    return 'Product{id: $id, name: $name, mark: $mark, color: $color}';
+    return 'Product{id: $id, name: $name, mark: $mark, color: $color, shopping:$shopping}';
   }
 
   Product.fromDocumment(DocumentSnapshot documentSnapshot) {
-    id = documentSnapshot.documentID;
-    name = documentSnapshot.data["name"];
-    mark = documentSnapshot.data["mark"];
-    color = documentSnapshot.data["color"];
+    id = documentSnapshot.id;
+    name = documentSnapshot.data()["name"];
+    mark = documentSnapshot.data()["mark"];
+    color = documentSnapshot.data()["color"];
+    quantity = documentSnapshot.data()["quantity"];
+    price = documentSnapshot.data()["price"];
+    categoryID = documentSnapshot.data()["categoryID"];
+    shopping = documentSnapshot.data()["shopping"];
   }
 
   Map<String, dynamic> toMap() {
@@ -27,6 +33,10 @@ class Product {
       "name": name,
       "mark": mark,
       "color": color,
+      "quantity": quantity,
+      "price": price,
+      "categoryID": categoryID,
+      "shopping":shopping,
     };
   }
 

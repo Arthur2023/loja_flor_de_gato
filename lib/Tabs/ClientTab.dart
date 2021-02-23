@@ -17,6 +17,7 @@ class ClientTab extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFFEEAE6),
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFF442C2E)),
         backgroundColor: Color(0xFFFEDBD0),
         title: Text(
           "Clients",

@@ -2,15 +2,12 @@ import 'package:flor_de_gato/Models/Client.dart';
 import 'package:flor_de_gato/Service/ClientService.dart';
 import 'package:flutter/material.dart';
 
-
 class ClientController extends ChangeNotifier {
-  ClientController(){
+  ClientController() {
     ClientService().getAll().then((value) => actualClients = value);
   }
-  List<Client> _actualClients = [
 
-  ];
-
+  List<Client> _actualClients = [];
 
   List<Client> get actualClients => _actualClients;
 
@@ -20,29 +17,38 @@ class ClientController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> add(Client c) async {
-
-    await ClientService().add(c);
+  Future<bool> add(Client c) async {
+    c = await ClientService().add(c);
+    if (c == null) return false;
     actualClients.add(c);
     notifyListeners();
-
+    return true;
   }
 
-  Future<void> update(Client c) async {
-
-    await ClientService().update(c);
-    if(actualClients.any((element) => element.id == c.id)){
+  Future<bool> update(Client c) async {
+    try {
+      await ClientService().update(c);
+    } catch (e) {
+      return false;
+    }
+    if (actualClients.any((element) => element.id == c.id)) {
       actualClients.firstWhere((element) => element.id == c.id).desclone(c);
     }
     notifyListeners();
-
+    return true;
   }
 
-  void remove(Client c){
-
-    actualClients.remove(c);
-    notifyListeners();
-
+  Future<bool> remove(Client c) async {
+   try{
+     await ClientService().delete(c);
+     actualClients.remove(c);
+     if (actualClients.any((element) => element.id == c.id)) {
+       actualClients.removeWhere((element) => element.id == c.id);
+       notifyListeners();
+       return true;
+   }
+    } catch(e){
+     return false;
+   }
   }
-
 }

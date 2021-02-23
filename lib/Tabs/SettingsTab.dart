@@ -10,6 +10,7 @@ class SettingsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFF442C2E)),
         backgroundColor: Color(0xFFFEDBD0),
         title: Text(
           "Settings",
