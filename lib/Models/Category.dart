@@ -11,9 +11,10 @@ class Category {
 
   Category(this.name);
 
+
   @override
   String toString() {
-    return 'Product{id: $id, name: $name}';
+    return 'Category{id: $id, name: $name, products: $products}';
   }
 
   Category.fromDocumment(DocumentSnapshot documentSnapshot) {
@@ -24,7 +25,12 @@ class Category {
   Map<String, dynamic> toMap() {
     return {
       "name": name,
-      "id": id,
     };
+  }
+
+  void desclone(Category category) {
+    if(category == null) return;
+    id = category.id;
+    name = category.name;
   }
 }

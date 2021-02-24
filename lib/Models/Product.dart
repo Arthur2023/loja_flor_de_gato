@@ -10,7 +10,7 @@ class Product {
   num price;
   String shopping;
 
-  Product(this.name, this.mark, this.color, this.quantity, this.price, this.shopping);
+  Product(this.name, this.mark, this.color, this.quantity, this.price, this.shopping, {this.id, this.categoryID});
 
   @override
   String toString() {
@@ -38,6 +38,22 @@ class Product {
       "categoryID": categoryID,
       "shopping":shopping,
     };
+  }
+
+  void desclone(Product product) {
+    if(product == null) return;
+    id = product.id;
+    name = product. name;
+    mark = product. mark;
+    color = product. color;
+    quantity = product.  quantity;
+    price = product.  price;
+    categoryID = product.  categoryID;
+    shopping = product.  shopping;
+  }
+
+  Product clone() {
+    return Product(name, mark, color, quantity, price, shopping, categoryID: categoryID, id: id);
   }
 
 }

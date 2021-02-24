@@ -1,9 +1,6 @@
-import 'package:flor_de_gato/Controllers/ClientController.dart';
 import 'package:flor_de_gato/Models/Client.dart';
-import 'package:flor_de_gato/Pages/CreateClient.dart';
-import 'package:flor_de_gato/Widgets/GenericDialog.dart';
+import 'package:flor_de_gato/Pages/Creates/CreateClient.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ListClientTile extends StatelessWidget {
   final Client client;

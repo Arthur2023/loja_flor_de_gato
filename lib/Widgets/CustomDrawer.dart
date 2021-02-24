@@ -2,8 +2,8 @@ import 'package:flor_de_gato/Tiles/Drawer/DrawerTile.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final PageController pageController;
 
+  final PageController pageController;
   CustomDrawer(this.pageController);
 
   Widget backGroundColor() => Container(

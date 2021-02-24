@@ -16,7 +16,10 @@ class ProductController extends ChangeNotifier {
     Category others = Category("Others");
     for (final product in _actualProducts) {
       if (_categorys.any((element) => element.id == product.categoryID)) {
-        _categorys.firstWhere((element) => element.id == product.categoryID).products.add(product);
+        _categorys
+            .firstWhere((element) => element.id == product.categoryID)
+            .products
+            .add(product);
       } else {
         others.products.add(product);
       }
@@ -42,14 +45,41 @@ class ProductController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void add(Product p) {
-    actualProducts.add(p);
-    notifyListeners();
+  num get tot {
+    num tot = 0;
+    for (final product in actualProducts) tot += product.price;
+    return tot;
   }
 
-  void remove(Product p) {
+  Future<bool> add(Product p, Category c) async {
+    if (c.id == null) c = await CategoryService().add(c);
+    if(c == null) return false;
+
+    p.categoryID = c.id;
+
+    if (p.id == null)
+      p = await ProductService().add(p);
+    else {
+      Product aux = actualProducts.firstWhere((element) => element.id == p.id);
+      p.quantity += aux.quantity;
+      p.price += aux.price;
+      p = await ProductService().update(p);
+    }
+    if (p == null) return false;
+    await load();
+    return true;
+  }
+
+  Future<bool> remove(Product p) async {
+    if (!await ProductService().delete(p)) return false;
     actualProducts.remove(p);
+    Category c = findCategory(p.categoryID);
+    if (c != null) {
+      print("AQUI");
+      c.products.removeWhere((element) => element.id == p.id);
+    }
     notifyListeners();
+    return true;
   }
 
   Future<bool> addCategory(Category c) async {
@@ -58,5 +88,11 @@ class ProductController extends ChangeNotifier {
     categorys.add(c);
     notifyListeners();
     return true;
+  }
+
+  Category findCategory(String categoryID) {
+    Category c = categorys.firstWhere((element) => element.id == categoryID,
+        orElse: () => null);
+    return c;
   }
 }

@@ -1,25 +1,32 @@
+
 import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flor_de_gato/Models/Product.dart';
-import 'package:flor_de_gato/Pages/CreateCategory.dart';
-import 'package:flor_de_gato/Pages/CreateMovement.dart';
-import 'package:flor_de_gato/Pages/HomePage.dart';
+import 'package:flor_de_gato/Pages/Creates/CreateCategory.dart';
+import 'package:flor_de_gato/Pages/Creates/CreateMovement.dart';
 import 'package:flor_de_gato/Tiles/Drawer/ListCategoryTile.dart';
-import 'package:flor_de_gato/Tiles/Drawer/ListProductTile.dart';
 import 'package:flor_de_gato/Widgets/CustomDrawer.dart';
 import 'package:flor_de_gato/Widgets/GenericDialog.dart';
-import 'package:flor_de_gato/Widgets/ProgressDialogue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class InventoryTab extends StatelessWidget {
+class InventoryTab extends StatefulWidget {
+
   final PageController pageController;
-  Product product = Product("", "", "", 0, 0, "");
 
   InventoryTab(
     this.pageController,
   );
 
+  @override
+  _InventoryTabState createState() => _InventoryTabState();
+}
+
+class _InventoryTabState extends State<InventoryTab> {
+
+  Product product = Product("", "", "", 0, 0, "");
+
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,24 +44,26 @@ class InventoryTab extends StatelessWidget {
           Center(
               child: Padding(
             padding: EdgeInsets.only(right: 25),
-            child: Text(
-              "529 R\$",
+            child: Text( context.watch<ProductController>().tot.toString() + " R\$",
               style: TextStyle(fontSize: 18, color: Color(0xFF442C2E)),
             ),
           ))
         ],
       ),
       body: Consumer<ProductController>(builder: (_, productController, __) {
-        return ListView.builder(
-          itemCount: productController.categorys.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-              child: ListCategoryTile(
-                category: productController.categorys[index],
-              ),
-            );
-          },
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                for(final category in productController.categorys)
+                  ListCategoryTile(
+                    category: category,
+                  ),
+                SizedBox(height: 90,)
+              ],
+            ),
+          ),
         );
       }),
       floatingActionButton: FloatingActionButton(
@@ -109,7 +118,7 @@ class InventoryTab extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomePage(),
+                              builder: (context) => CreateMovement(),
                             ),
                           );
                         },
@@ -126,7 +135,7 @@ class InventoryTab extends StatelessWidget {
           );
         },
       ),
-      drawer: CustomDrawer(pageController),
+      drawer: CustomDrawer(widget.pageController),
     );
   }
 }
