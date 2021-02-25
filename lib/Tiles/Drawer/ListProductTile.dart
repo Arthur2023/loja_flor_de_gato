@@ -1,8 +1,7 @@
 import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flor_de_gato/Models/Category.dart';
 import 'package:flor_de_gato/Models/Product.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/Pages/Creates/CreateMovement.dart';
-import 'package:flor_de_gato/Widgets/GenericDialog.dart';
+import 'package:flor_de_gato/Pages/Creates/CreateMovement.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -39,7 +39,7 @@ class ListRequestTile extends StatelessWidget {
         onLongPress: () {},
         tileColor: Color(0xFFFEDBD0),
         title: Text(
-          request.buyer + ", " + request.title,
+          "",
           style: TextStyle(fontSize: 20, color: Color(0xFF442C2E)),
           textAlign: TextAlign.start,
         ),

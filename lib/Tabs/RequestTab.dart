@@ -1,10 +1,6 @@
-import 'package:flor_de_gato/Controllers/RequestController.dart';
-import 'package:flor_de_gato/Models/Request.dart';
-import 'package:flor_de_gato/Tiles/Drawer/ListRequstTile.dart';
+import 'package:flor_de_gato/Pages/Creates/CreateRequest.dart';
 import 'package:flor_de_gato/Widgets/CustomDrawer.dart';
-import 'package:flor_de_gato/Widgets/GenericDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RequestTab extends StatelessWidget {
   final PageController pageController;
@@ -31,36 +27,14 @@ class RequestTab extends StatelessWidget {
           color: Color(0xFFFEEAE6),
         ),
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context2) => GenericDialog(
-              title: "Criar Pedido",
-              contentText: "",
-              submitButtonText: "Criar",
-              submitButtonColor: Color(0xFF442C2E),
-              onSubmit: () {
-                context.read<RequestController>().add(
-                      Request("Urso", "Emily"),
-                    );
-              },
-              color: Color(0xFFFEDBD0),
-              dismissButtonColor: Color(0xFF442C2E),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateRequest(),
             ),
           );
-        },
-      ),
-      body: Consumer<RequestController>(builder: (_, requestController, __) {
-        return Stack(
-          children: [
-            ListView.builder(
-                itemCount: requestController.actualRequests.length,
-                itemBuilder: (context, index) {
-                  return ListRequestTile(
-                      request: requestController.actualRequests[index]);
-                }),
-          ],
-        );
-      }),
+              },
+    ),
       drawer: CustomDrawer(pageController),
     );
   }

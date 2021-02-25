@@ -19,6 +19,7 @@ class CreateMovement extends StatefulWidget {
         product = p ?? Product("", "", "", 0, 0, ""),
         category = c ?? Category("");
 
+
   @override
   _CreateMovementState createState() => _CreateMovementState(product, category);
 }
@@ -31,6 +32,7 @@ class _CreateMovementState extends State<CreateMovement> {
   final quantityController = TextEditingController();
   final priceController = TextEditingController();
   final nameCategoryController = TextEditingController();
+
 
   final Product product;
   final Category category;
@@ -46,8 +48,8 @@ class _CreateMovementState extends State<CreateMovement> {
     markController.text = product.mark;
     colorController.text = product.color;
     shoppingController.text = product.shopping;
-    quantityController.text = product.quantity.toString();
-    priceController.text = product.price.toString();
+    quantityController.text = product.quantity == 0? "" : product.quantity.toString();
+    priceController.text = product.price == 0? "" : product.price.toString();
     nameCategoryController.text = category.name;
   }
 
@@ -153,6 +155,7 @@ class _CreateMovementState extends State<CreateMovement> {
               child: Column(
                 children: [
                   TextFormField(
+                    readOnly: widget.editing,
                     controller: nameController,
                     decoration: InputDecoration(
                       labelText: "Name",
@@ -176,6 +179,7 @@ class _CreateMovementState extends State<CreateMovement> {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 7),
                     child: TextFormField(
+                      readOnly: widget.editing,
                       controller: markController,
                       decoration: InputDecoration(
                         labelText: "Mark",
@@ -198,6 +202,7 @@ class _CreateMovementState extends State<CreateMovement> {
                     ),
                   ),
                   TextFormField(
+                    readOnly: widget.editing,
                     controller: colorController,
                     decoration: InputDecoration(
                       labelText: "Color",
@@ -218,34 +223,41 @@ class _CreateMovementState extends State<CreateMovement> {
                       product.color = text;
                     },
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 7),
-                    child: TextFormField(
-                      controller: shoppingController,
-                      decoration: InputDecoration(
-                        labelText: "Shopping",
-                        labelStyle: TextStyle(color: Color(0xFF442C2E)),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xFF442C2E),
+                  if(!widget.editing)
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 7),
+                      child: TextFormField(
+                        controller: shoppingController,
+                        decoration: InputDecoration(
+                          labelText: "Shopping",
+                          labelStyle: TextStyle(color: Color(0xFF442C2E)),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFF442C2E),
+                            ),
                           ),
                         ),
+                        validator: (text) {
+                          if (text.isEmpty) {
+                            return "Ainda faltam algumas informacoes!";
+                          }
+                          return null;
+                        },
+                        onSaved: (text) {
+                          product.shopping = text;
+                        },
                       ),
-                      validator: (text) {
-                        if (text.isEmpty) {
-                          return "Ainda faltam algumas informacoes!";
-                        }
-                        return null;
-                      },
-                      onSaved: (text) {
-                        product.shopping = text;
-                      },
                     ),
-                  ),
+                  if(widget.editing)
+                    SizedBox(
+                      height: 10,
+                    ),
                   TextFormField(
+                    readOnly: widget.editing,
                     controller: quantityController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
+                      prefix: Text("g ", style: TextStyle(color: Colors.grey)),
                       labelText: "Quantity",
                       labelStyle: TextStyle(color: Color(0xFF442C2E)),
                       border: OutlineInputBorder(
@@ -268,9 +280,11 @@ class _CreateMovementState extends State<CreateMovement> {
                     height: 7,
                   ),
                   TextFormField(
+                    readOnly: widget.editing,
                     controller: priceController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
+                      prefix: Text("R\$ ", style: TextStyle(color: Colors.grey)),
                       labelText: "Price",
                       labelStyle: TextStyle(color: Color(0xFF442C2E)),
                       border: OutlineInputBorder(
@@ -331,6 +345,7 @@ class _CreateMovementState extends State<CreateMovement> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: TextFormField(
+                readOnly: widget.editing,
                 controller: nameCategoryController,
                 decoration: InputDecoration(
                   labelText: "Category",
@@ -356,7 +371,8 @@ class _CreateMovementState extends State<CreateMovement> {
           ],
         ),
       )),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: widget.editing ? null : FloatingActionButton(
+
         onPressed: () async {
           if (!formkey.currentState.validate()) return;
           formkey.currentState.save();
