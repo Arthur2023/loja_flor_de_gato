@@ -22,6 +22,7 @@ class ProductSearch extends StatelessWidget {
             children: [
               for (final product
                   in context.watch<ProductController>().actualProducts)
+                if(product.quantity > 0)
                 InkWell(
                   onTap: () {
                     Navigator.pop(context, product.clone());

@@ -56,9 +56,20 @@ class RequestController extends ChangeNotifier {
   Future<bool> closeRequest(Request r) async {
     try {
       r.state = "closed";
-      if (!await RequestService().update(r, updatedProducts: false)) throw Exception();
+      if (!await RequestService().update(r)) throw Exception();
       openRequests.removeWhere((element) => element.id == r.id);
       closedRequests.add(r);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> cancelRequest(Request r) async {
+    try {
+      if (!await RequestService().cancelRequest(r)) throw Exception();
+      await load();
       notifyListeners();
       return true;
     } catch (e) {

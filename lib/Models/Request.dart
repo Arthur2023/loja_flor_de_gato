@@ -155,11 +155,13 @@ class Request extends ChangeNotifier {
 
   int getAvaliableQuantityFromProductAtMoment(Product p) {
     int aux = p.quantity;
+    print(aux);
     for (final rp in products) {
-      if (rp.product.id == p.id) {
-        aux -= rp.product.quantity;
+      if (rp.product.id == p.id && rp.id == null) {
+        aux -= rp.quantity;
       }
     }
+    print(aux);
     return aux;
   }
 }

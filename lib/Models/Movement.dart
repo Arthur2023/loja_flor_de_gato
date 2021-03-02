@@ -9,9 +9,11 @@ class Movement {
   String productID;
   num quantity;
 
+  Product product;
+
   Map<String, dynamic> toMap() {
     return {
-      "date": Timestamp.now(),
+      "date": Timestamp.now().toString(),
       "productID": productID,
       "quantity": quantity
     };
@@ -19,7 +21,7 @@ class Movement {
 
   Movement.fromDocumment(DocumentSnapshot documentSnapshot) {
     id = documentSnapshot.id;
-    date = documentSnapshot.data()["date"];
+    date = documentSnapshot.data()["date"].toString();
     productID = documentSnapshot.data()["productID"];
     quantity = documentSnapshot.data()["quantity"];
 

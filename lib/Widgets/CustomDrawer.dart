@@ -17,9 +17,16 @@ class CustomDrawer extends StatelessWidget {
       children: [
         backGroundColor(),
         ListView(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+          padding: EdgeInsets.symmetric(),
           children: <Widget>[
             Container(
+              // decoration: BoxDecoration(
+              //   color: Colors.white,
+              //   image: DecorationImage(
+              //       image:AssetImage("images/nature1.jpg"),
+              //   fit: BoxFit.cover
+              //   ),
+              // ),
               height: 225,
               padding: EdgeInsets.all(10),
               child: Stack(
@@ -34,10 +41,17 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   Positioned(
                     bottom: 0,
-                    right: 15,
+                    right: 25,
                     child: Text(
                       "R.H.S",
                       style: TextStyle(color: Color(0xFF442C2E), fontSize: 15),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 1.5,
+                    right: 12,
+                    child: Icon(
+                      Icons.local_florist_outlined, color: Color(0xFF442C2E), size: 11,
                     ),
                   ),
                 ],

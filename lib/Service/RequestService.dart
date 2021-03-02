@@ -3,6 +3,7 @@ import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flor_de_gato/Models/Request.dart';
 import 'package:flor_de_gato/Models/RequestProduct.dart';
+import 'package:flor_de_gato/Service/ProductService.dart';
 
 class RequestService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -37,7 +38,7 @@ class RequestService {
   Future<bool> addProducts(Request r) async {
     CollectionReference productsReference = collectionReference.doc(r.id).collection("Products");
     for (final RequestProduct p in r.products) {
-      // if(p.id != null) continue;
+      if(p.id != null) continue;
       try {
         p.product.quantity -= p.quantity;
         print(p.toString());
@@ -55,26 +56,23 @@ class RequestService {
     return true;
   }
 
-  Future<bool> updateProducts(Request r) async {
-    await addProducts(r);
+  Future<bool> cancelRequest(Request r) async {
     for (final RequestProduct p in r.products.where((element) => element.id != null).toList()) {
       try {
-        DocumentReference productReference = collectionReference.doc(r.id).collection("Products").doc(p.id);
-        //TODO: atualizar a diferenca entre estoque e uso de produto;
-        await productReference.update(p.toMap());
+        p.product.quantity += p.quantity;
+        await ProductService().update(p.product);
       } catch (e) {
         //TODO: Excluir produtos ja adicionados - fazer transacao
         return false;
       }
-    }
+    } await collectionReference.doc(r.id).delete();
     return true;
   }
 
-  Future<bool> update(Request request, {bool updatedProducts = true}) async {
+  Future<bool> update(Request request) async {
     print(request);
     try {
       await collectionReference.doc(request.id).update(request.toMap());
-      if (updatedProducts) await updateProducts(request);
 
       return true;
     } catch (e) {

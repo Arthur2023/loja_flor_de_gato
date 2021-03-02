@@ -6,6 +6,15 @@ class MovementService {
   CollectionReference collectionReference = FirebaseFirestore.instance
       .collection("Historic");
 
+  Future<List<Movement>> getAll() async {
+    List<Movement> list = [];
+    QuerySnapshot snapshot = await collectionReference.get();
+    for (final documment in snapshot.docs) {
+      list.add(Movement.fromDocumment(documment));
+    }
+    return list;
+  }
+
   Future<Movement> add(Movement movement) async {
     DocumentReference documentReference = await collectionReference.add(
         movement.toMap());

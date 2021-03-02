@@ -34,6 +34,7 @@ class ProductController extends ChangeNotifier {
   List<Product> _actualProducts = [];
   List<Category> _categorys = [];
 
+
   List<Category> get categorys => _categorys;
 
   set categorys(List<Category> value) {

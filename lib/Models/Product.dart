@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flor_de_gato/Models/RequestProduct.dart';
 import 'package:flor_de_gato/Service/ProductService.dart';
 
 class Product {
@@ -23,6 +22,7 @@ class Product {
   String toString() {
     return 'Product{id: $id, name: $name, mark: $mark, color: $color, categoryID: $categoryID, quantity: $quantity, price: $price, shopping: $shopping}';
   }
+
 
   Product.fromDocumment(DocumentSnapshot documentSnapshot) {
     id = documentSnapshot.id;

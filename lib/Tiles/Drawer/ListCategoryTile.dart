@@ -15,16 +15,21 @@ class ListCategoryTile extends StatelessWidget {
       child: ExpansionTile(
         title: Row(
           children: [
-            Icon(Icons.category, color: Color(0xFFFEDBD0),),
+            Icon(Icons.local_florist_outlined, color: Color(0xFFFEDBD0),),
             SizedBox(width: 20),
             Text(category.name, style: TextStyle(color: Color(0xFFFEDBD0),),),
           ],
         ),
         children: [
           for (final product in category.products)
-            ListProductTile(
-              product: product,
+            if(product.quantity >0)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:2.5),
+              child: ListProductTile(
+                product: product,
+              ),
             ),
+          const SizedBox(height: 5,)
         ],
       ),
     );

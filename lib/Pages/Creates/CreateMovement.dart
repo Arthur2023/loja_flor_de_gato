@@ -46,8 +46,8 @@ class _CreateMovementState extends State<CreateMovement> {
     markController.text = product.mark;
     colorController.text = product.color;
     shoppingController.text = product.shopping;
-    quantityController.text = product.quantity == null ? "" : product.quantity.toString();
-    priceController.text = product.price == 0 ? "" : product.price.toString();
+    quantityController.text = product.quantity == 0 ? "" : product.quantity.toStringAsFixed(2);
+    priceController.text = product.price == 0 ? "" : product.price.toStringAsFixed(2);
     nameCategoryController.text = category.name;
   }
 
@@ -64,39 +64,6 @@ class _CreateMovementState extends State<CreateMovement> {
           style: TextStyle(color: Color(0xFF442C2E)),
         ),
         centerTitle: true,
-        actions: [
-          if (widget.editing)
-            IconButton(
-                color: Color(0xFF442C2E),
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context2) => GenericDialog(
-                      title: "Confirmar",
-                      contentText: "Deseja excluir este pedido?",
-                      submitButtonText: "Excluir",
-                      submitButtonColor: Colors.red,
-                      onSubmit: () async {
-                        progressDialog(context);
-                        if (!await context.read<ProductController>().remove(product)) {
-                          Navigator.of(context).pop();
-                          showSnackBar(
-                            text: "Erro ao Excluir produto",
-                            duration: Duration(seconds: 2),
-                            scaffoldKey: scaffoldKey,
-                          );
-                          print(product);
-                          return;
-                        }
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  );
-                }),
-        ],
       ),
       body: SingleChildScrollView(
           child: Form(
@@ -105,16 +72,16 @@ class _CreateMovementState extends State<CreateMovement> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 5),
-            if(!widget.editing)
-            SwitchListTile(
-              value: context.watch<ProductController>().typemov,
-              onChanged: (value) {
-                context.read<ProductController>().typemov = value;
-              },
-              activeColor: Colors.white,
-              activeTrackColor: Colors.green[700],
-              inactiveTrackColor: Colors.red[700],
-            ),
+            if (!widget.editing)
+              SwitchListTile(
+                value: context.watch<ProductController>().typemov,
+                onChanged: (value) {
+                  context.read<ProductController>().typemov = value;
+                },
+                activeColor: Colors.white,
+                activeTrackColor: Colors.green[700],
+                inactiveTrackColor: Colors.red[700],
+              ),
             Padding(
               padding: const EdgeInsets.all(9),
               child: Row(
@@ -125,30 +92,31 @@ class _CreateMovementState extends State<CreateMovement> {
                     style: TextStyle(color: Color(0xFF442C2E), fontSize: 18, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () async {
-                      Product aux = (await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductSearch(),
-                        ),
-                      ) as Product);
-                      print(aux);
-                      if (aux != null) {
-                        setState(() {
-                          product.desclone(aux);
-                        });
-                        nameController.text = product.name;
-                        markController.text = product.mark;
-                        colorController.text = product.color;
-                        shoppingController.text = product.shopping;
-                        quantityController.text = product.quantity.toString();
-                        priceController.text = product.price.toString();
-                        print(product);
-                      }
-                    },
-                  ),
+                  if (!widget.editing)
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () async {
+                        Product aux = (await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductSearch(),
+                          ),
+                        ) as Product);
+                        print(aux);
+                        if (aux != null) {
+                          setState(() {
+                            product.desclone(aux);
+                          });
+                          nameController.text = product.name;
+                          markController.text = product.mark;
+                          colorController.text = product.color;
+                          shoppingController.text = product.shopping;
+                          quantityController.text = product.quantity.toString();
+                          priceController.text = product.price.toString();
+                          print(product);
+                        }
+                      },
+                    ),
                 ],
               ),
             ),
@@ -158,6 +126,7 @@ class _CreateMovementState extends State<CreateMovement> {
               child: Column(
                 children: [
                   TextFormField(
+                    enabled: context.read<ProductController>().typemov,
                     readOnly: widget.editing,
                     controller: nameController,
                     decoration: InputDecoration(
@@ -182,6 +151,7 @@ class _CreateMovementState extends State<CreateMovement> {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 7),
                     child: TextFormField(
+                      enabled: context.read<ProductController>().typemov,
                       readOnly: widget.editing,
                       controller: markController,
                       decoration: InputDecoration(
@@ -205,6 +175,7 @@ class _CreateMovementState extends State<CreateMovement> {
                     ),
                   ),
                   TextFormField(
+                    enabled: context.read<ProductController>().typemov,
                     readOnly: widget.editing,
                     controller: colorController,
                     decoration: InputDecoration(
@@ -230,6 +201,7 @@ class _CreateMovementState extends State<CreateMovement> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 7),
                       child: TextFormField(
+                        enabled: context.read<ProductController>().typemov,
                         controller: shoppingController,
                         decoration: InputDecoration(
                           labelText: "Shopping",
@@ -282,7 +254,9 @@ class _CreateMovementState extends State<CreateMovement> {
                   SizedBox(
                     height: 7,
                   ),
-                  TextFormField(
+                  if(context.watch<ProductController>().typemov ||
+                      widget.editing)
+                    TextFormField(
                     readOnly: widget.editing,
                     controller: priceController,
                     keyboardType: TextInputType.number,
@@ -319,25 +293,26 @@ class _CreateMovementState extends State<CreateMovement> {
                     style: TextStyle(color: Color(0xFF442C2E), fontSize: 18, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () async {
-                      Category aux = (await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategorySearch(),
-                        ),
-                      ) as Category);
-                      print(aux);
-                      if (aux != null) {
-                        setState(() {
-                          category.desclone(aux);
-                          nameCategoryController.text = category.name;
-                          print(category);
-                        });
-                      }
-                    },
-                  ),
+                  if (!widget.editing)
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () async {
+                        Category aux = (await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CategorySearch(),
+                          ),
+                        ) as Category);
+                        print(aux);
+                        if (aux != null) {
+                          setState(() {
+                            category.desclone(aux);
+                            nameCategoryController.text = category.name;
+                            print(category);
+                          });
+                        }
+                      },
+                    ),
                 ],
               ),
             ),
@@ -367,39 +342,75 @@ class _CreateMovementState extends State<CreateMovement> {
                 },
               ),
             ),
-            SizedBox(height: 100)
+            Padding(
+              padding: const EdgeInsets.only(top: 25, bottom: 50, left: 10, right: 10),
+              child: SizedBox(
+                  height: 45,
+                  child: widget.editing
+                      ? null
+                      : RaisedButton(
+                          child: Text(
+                            "Salvar",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          color: Color(0xFF442C2E),
+                          elevation: 5,
+                          onPressed: () async {
+                            if (!formkey.currentState.validate()) return;
+                            formkey.currentState.save();
+                            progressDialog(context);
+                            if (!context.read<ProductController>().typemov) {
+                              product.quantity = product.quantity * -1;
+                              Product aux = ProductController().findProduct(product.id);
+                              product.price = ((aux.price/aux.quantity)*product.quantity);
+                            }
+
+                            if (!await context.read<ProductController>().add(product, category)) {
+                              Navigator.of(context).pop();
+                              showSnackBar(
+                                text: "Erro ao adicionar cliente",
+                                scaffoldKey: scaffoldKey,
+                              );
+                              return;
+                            }
+                            print(product);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                        )),
+            ),
           ],
         ),
       )),
-      floatingActionButton: widget.editing
-          ? null
-          : FloatingActionButton(
-              onPressed: () async {
-                if (!formkey.currentState.validate()) return;
-                formkey.currentState.save();
-                progressDialog(context);
-                if (!context.read<ProductController>().typemov) {
-                  product.quantity = product.quantity * -1;
-                  product.price = product.price * -1;
-                }
-
-
-                if (!await context.read<ProductController>().add(product, category)) {
-                  Navigator.of(context).pop();
-                  showSnackBar(
-                    text: "Erro ao adicionar cliente",
-                    scaffoldKey: scaffoldKey,
-                  );
-                  return;
-                }
-                print(product);
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              backgroundColor: Color(0xFF442C2E),
-              child: Icon(Icons.save),
-            ),
+      // floatingActionButton: widget.editing
+      //     ? null
+      //     : FloatingActionButton(
+      //         onPressed: () async {
+      //           if (!formkey.currentState.validate()) return;
+      //           formkey.currentState.save();
+      //           progressDialog(context);
+      //           if (!context.read<ProductController>().typemov) {
+      //             product.quantity = product.quantity * -1;
+      //             product.price = product.price * -1;
+      //           }
+      //
+      //           if (!await context.read<ProductController>().add(product, category)) {
+      //             Navigator.of(context).pop();
+      //             showSnackBar(
+      //               text: "Erro ao adicionar cliente",
+      //               scaffoldKey: scaffoldKey,
+      //             );
+      //             return;
+      //           }
+      //           print(product);
+      //           Navigator.of(context).pop();
+      //           Navigator.of(context).pop();
+      //           Navigator.of(context).pop();
+      //         },
+      //         backgroundColor: Color(0xFF442C2E),
+      //         child: Icon(Icons.save),
+      //       ),
     );
   }
 }

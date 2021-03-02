@@ -1,4 +1,5 @@
 import 'package:flor_de_gato/Controllers/ClientController.dart';
+import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flor_de_gato/Controllers/RequestController.dart';
 import 'package:flor_de_gato/Models/Client.dart';
 import 'package:flor_de_gato/Models/Product.dart';
@@ -45,8 +46,8 @@ class _CreateRequestState extends State<CreateRequest> {
   @override
   void initState() {
     super.initState();
-    estimatedTimeController.text = request.estimatedTime.toStringAsFixed(1);
-    deliveryController.text = request.delivery == null ? "0" : request.delivery.toString();
+    estimatedTimeController.text = request.estimatedTime == 0 ? "" : request.estimatedTime.toStringAsFixed(1);
+    deliveryController.text = request.delivery == 0 ? "" : request.delivery.toStringAsFixed(2);
     formOfPaymentController.text = request.formOfPayment;
     estimatedDateController.text = request.estimatedDate;
     titleController.text = request.title;
@@ -374,10 +375,10 @@ class _CreateRequestState extends State<CreateRequest> {
                                                       RequestProduct rp = RequestProduct.fromProduct(aux);
                                                       rp.quantity = quantity;
                                                       if (rp.product.quantity < quantity) return;
-                                                      rp.product.price = (rp.product.price / rp.product.quantity) * quantity;
+                                                      rp.product.price =
+                                                          (rp.product.price / rp.product.quantity) * quantity;
 
                                                       request.addRequestProduct(rp);
-
                                                     }
                                                   },
                                                   color: Color(0xFF442C2E),
@@ -417,7 +418,8 @@ class _CreateRequestState extends State<CreateRequest> {
                                         ),
                                       ),
                                       onSaved: (text) {
-                                        request.estimatedTime = num.tryParse(estimatedTimeController.text) ?? 0;
+                                        if (num.tryParse(text) != null)
+                                          request.estimatedTime = num.tryParse(estimatedTimeController.text) ?? 0;
                                       },
                                     ),
                                   ),
@@ -452,12 +454,8 @@ class _CreateRequestState extends State<CreateRequest> {
                                         ),
                                       ),
                                     ),
-                                    validator: (text) {
-                                      if (num.tryParse(text) == null) return "Valor invalido";
-                                      return null;
-                                    },
                                     onSaved: (text) {
-                                      request.delivery = num.parse(text);
+                                      if (num.tryParse(text) != null) request.delivery = num.parse(text) ?? 0;
                                     },
                                   ),
                                 ),
@@ -486,12 +484,36 @@ class _CreateRequestState extends State<CreateRequest> {
                                         style: TextStyle(color: Color(0xFFFEEAE6), fontSize: 18),
                                       ),
                                       color: Color(0xFF442C2E),
-                                      onPressed: () {
-                                        if(!widget.editing) {
+                                      onPressed: () async {
+                                        if (!widget.editing) {
                                           Navigator.of(context).pop();
                                           return;
                                         } else {
-
+                                          showDialog(
+                                            context: context,
+                                            builder: (context2) => GenericDialog(
+                                              title: "Confirmar",
+                                              contentText: "Deseja excluir este pedido?",
+                                              submitButtonText: "Excluir",
+                                              submitButtonColor: Colors.red,
+                                              onSubmit: () async {
+                                                progressDialog(context);
+                                                if (!await context.read<RequestController>().cancelRequest(request)) {
+                                                  Navigator.of(context).pop();
+                                                  showSnackBar(
+                                                    text: "Erro ao atualizar pedido",
+                                                    scaffoldKey: scaffoldKey,
+                                                  );
+                                                  print(client);
+                                                  return;
+                                                }
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          );
+                                          Navigator.pop(context);
                                         }
                                       },
                                     ),
@@ -533,6 +555,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                           return;
                                         }
                                         print(request);
+                                        await context.read<ProductController>().load();
                                         Navigator.of(context).pop();
                                         Navigator.of(context).pop();
                                       },

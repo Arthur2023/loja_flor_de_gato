@@ -1,4 +1,5 @@
 import 'package:flor_de_gato/Controllers/ClientController.dart';
+import 'package:flor_de_gato/Controllers/MovementController.dart';
 import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,10 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (_) => ClientController(),
+            lazy: false,
+          ),
+          ChangeNotifierProvider(
+            create: (_) => MovementController(),
             lazy: false,
           ),
           ChangeNotifierProvider(
