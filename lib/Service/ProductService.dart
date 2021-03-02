@@ -23,8 +23,11 @@ class ProductService {
   }
 
   Future<Product> update(Product product) async {
-    await collectionReference.doc(product.id).update(
-        product.toMap());
+    try{
+      await collectionReference.doc(product.id).update(product.toMap());
+    } catch (e){
+      product = await add(product);
+    }
     return product;
   }
 
@@ -36,4 +39,6 @@ class ProductService {
       return false;
     }
   }
+
+
 }

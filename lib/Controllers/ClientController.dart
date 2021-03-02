@@ -52,4 +52,8 @@ class ClientController extends ChangeNotifier {
    }
   }
 
+  Client findID(String id){
+    return _actualClients.firstWhere((element) => element.id == id, orElse:() => Client("Client not found",""));
+  }
+
 }

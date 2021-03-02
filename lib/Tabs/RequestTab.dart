@@ -1,6 +1,9 @@
+import 'package:flor_de_gato/Controllers/RequestController.dart';
 import 'package:flor_de_gato/Pages/Creates/CreateRequest.dart';
+import 'package:flor_de_gato/Tiles/Drawer/ListRequestTile.dart';
 import 'package:flor_de_gato/Widgets/CustomDrawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RequestTab extends StatelessWidget {
   final PageController pageController;
@@ -35,6 +38,12 @@ class RequestTab extends StatelessWidget {
           );
               },
     ),
+      body: ListView(
+        children: [
+          for(final request in context.watch<RequestController>().openRequests)
+            ListRequestTile(request: request)
+        ],
+      ),
       drawer: CustomDrawer(pageController),
     );
   }

@@ -19,7 +19,6 @@ class CreateMovement extends StatefulWidget {
         product = p ?? Product("", "", "", 0, 0, ""),
         category = c ?? Category("");
 
-
   @override
   _CreateMovementState createState() => _CreateMovementState(product, category);
 }
@@ -32,7 +31,6 @@ class _CreateMovementState extends State<CreateMovement> {
   final quantityController = TextEditingController();
   final priceController = TextEditingController();
   final nameCategoryController = TextEditingController();
-
 
   final Product product;
   final Category category;
@@ -48,8 +46,8 @@ class _CreateMovementState extends State<CreateMovement> {
     markController.text = product.mark;
     colorController.text = product.color;
     shoppingController.text = product.shopping;
-    quantityController.text = product.quantity == 0? "" : product.quantity.toString();
-    priceController.text = product.price == 0? "" : product.price.toString();
+    quantityController.text = product.quantity == null ? "" : product.quantity.toString();
+    priceController.text = product.price == 0 ? "" : product.price.toString();
     nameCategoryController.text = category.name;
   }
 
@@ -81,9 +79,7 @@ class _CreateMovementState extends State<CreateMovement> {
                       submitButtonColor: Colors.red,
                       onSubmit: () async {
                         progressDialog(context);
-                        if (!await context
-                            .read<ProductController>()
-                            .remove(product)) {
+                        if (!await context.read<ProductController>().remove(product)) {
                           Navigator.of(context).pop();
                           showSnackBar(
                             text: "Erro ao Excluir produto",
@@ -108,7 +104,17 @@ class _CreateMovementState extends State<CreateMovement> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 5),
+            if(!widget.editing)
+            SwitchListTile(
+              value: context.watch<ProductController>().typemov,
+              onChanged: (value) {
+                context.read<ProductController>().typemov = value;
+              },
+              activeColor: Colors.white,
+              activeTrackColor: Colors.green[700],
+              inactiveTrackColor: Colors.red[700],
+            ),
             Padding(
               padding: const EdgeInsets.all(9),
               child: Row(
@@ -116,10 +122,7 @@ class _CreateMovementState extends State<CreateMovement> {
                 children: [
                   Text(
                     "Product",
-                    style: TextStyle(
-                        color: Color(0xFF442C2E),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Color(0xFF442C2E), fontSize: 18, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   IconButton(
@@ -223,7 +226,7 @@ class _CreateMovementState extends State<CreateMovement> {
                       product.color = text;
                     },
                   ),
-                  if(!widget.editing)
+                  if (!widget.editing)
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 7),
                       child: TextFormField(
@@ -248,7 +251,7 @@ class _CreateMovementState extends State<CreateMovement> {
                         },
                       ),
                     ),
-                  if(widget.editing)
+                  if (widget.editing)
                     SizedBox(
                       height: 10,
                     ),
@@ -313,10 +316,7 @@ class _CreateMovementState extends State<CreateMovement> {
                 children: [
                   Text(
                     "Category",
-                    style: TextStyle(
-                        color: Color(0xFF442C2E),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Color(0xFF442C2E), fontSize: 18, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   IconButton(
@@ -371,29 +371,35 @@ class _CreateMovementState extends State<CreateMovement> {
           ],
         ),
       )),
-      floatingActionButton: widget.editing ? null : FloatingActionButton(
+      floatingActionButton: widget.editing
+          ? null
+          : FloatingActionButton(
+              onPressed: () async {
+                if (!formkey.currentState.validate()) return;
+                formkey.currentState.save();
+                progressDialog(context);
+                if (!context.read<ProductController>().typemov) {
+                  product.quantity = product.quantity * -1;
+                  product.price = product.price * -1;
+                }
 
-        onPressed: () async {
-          if (!formkey.currentState.validate()) return;
-          formkey.currentState.save();
-          progressDialog(context);
-          if (!await context.read<ProductController>().add(product, category)) {
-            Navigator.of(context).pop();
-            showSnackBar(
-              text: "Erro ao adicionar cliente",
-              scaffoldKey: scaffoldKey,
-            );
-            return;
-          }
 
-          print(product);
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        },
-        backgroundColor: Color(0xFF442C2E),
-        child: Icon(Icons.save),
-      ),
+                if (!await context.read<ProductController>().add(product, category)) {
+                  Navigator.of(context).pop();
+                  showSnackBar(
+                    text: "Erro ao adicionar cliente",
+                    scaffoldKey: scaffoldKey,
+                  );
+                  return;
+                }
+                print(product);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              backgroundColor: Color(0xFF442C2E),
+              child: Icon(Icons.save),
+            ),
     );
   }
 }

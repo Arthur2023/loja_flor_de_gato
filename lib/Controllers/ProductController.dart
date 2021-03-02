@@ -1,12 +1,18 @@
 import 'package:flor_de_gato/Models/Category.dart';
+import 'package:flor_de_gato/Models/Movement.dart';
 import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flor_de_gato/Service/CategoryService.dart';
+import 'package:flor_de_gato/Service/MovementService.dart';
 import 'package:flor_de_gato/Service/ProductService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductController extends ChangeNotifier {
-  ProductController() {
+  static final ProductController _instance = ProductController.internal();
+
+  factory ProductController() => _instance;
+
+  ProductController.internal() {
     load();
   }
 
@@ -16,10 +22,7 @@ class ProductController extends ChangeNotifier {
     Category others = Category("Others");
     for (final product in _actualProducts) {
       if (_categorys.any((element) => element.id == product.categoryID)) {
-        _categorys
-            .firstWhere((element) => element.id == product.categoryID)
-            .products
-            .add(product);
+        _categorys.firstWhere((element) => element.id == product.categoryID).products.add(product);
       } else {
         others.products.add(product);
       }
@@ -38,6 +41,15 @@ class ProductController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _typemov = true;
+
+  bool get typemov => _typemov;
+
+  set typemov(bool value) {
+    _typemov = value;
+    notifyListeners();
+  }
+
   List<Product> get actualProducts => _actualProducts;
 
   set actualProducts(List<Product> value) {
@@ -53,19 +65,21 @@ class ProductController extends ChangeNotifier {
 
   Future<bool> add(Product p, Category c) async {
     if (c.id == null) c = await CategoryService().add(c);
-    if(c == null) return false;
+    if (c == null) return false;
 
     p.categoryID = c.id;
+    num movimentQuantity = p.quantity;
 
-    if (p.id == null)
+    if (p.id == null) {
       p = await ProductService().add(p);
-    else {
+    } else {
       Product aux = actualProducts.firstWhere((element) => element.id == p.id);
-      p.quantity += aux.quantity;
       p.price += aux.price;
+      p.quantity = aux.quantity + p.quantity;
       p = await ProductService().update(p);
     }
     if (p == null) return false;
+    await MovementService().add(Movement.fromProduct(p..quantity = movimentQuantity));
     await load();
     return true;
   }
@@ -91,8 +105,12 @@ class ProductController extends ChangeNotifier {
   }
 
   Category findCategory(String categoryID) {
-    Category c = categorys.firstWhere((element) => element.id == categoryID,
-        orElse: () => null);
+    Category c = categorys.firstWhere((element) => element.id == categoryID, orElse: () => null);
+    return c;
+  }
+
+  Product findProduct(String productID) {
+    Product c = _actualProducts.firstWhere((element) => element.id == productID, orElse: () => null);
     return c;
   }
 }

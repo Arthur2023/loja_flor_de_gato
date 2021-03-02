@@ -43,7 +43,7 @@ class _InventoryTabState extends State<InventoryTab> {
           Center(
               child: Padding(
             padding: EdgeInsets.only(right: 25),
-            child: Text( context.watch<ProductController>().tot.toString() + " R\$",
+            child: Text( context.watch<ProductController>().tot.toStringAsFixed(2) + " R\$",
               style: TextStyle(fontSize: 18, color: Color(0xFF442C2E)),
             ),
           ))

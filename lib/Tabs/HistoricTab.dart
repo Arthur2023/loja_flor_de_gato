@@ -1,5 +1,8 @@
+import 'package:flor_de_gato/Controllers/RequestController.dart';
+import 'package:flor_de_gato/Tiles/Drawer/ListRequestTile.dart';
 import 'package:flor_de_gato/Widgets/CustomDrawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HistoricTab extends StatelessWidget {
 
@@ -20,14 +23,11 @@ class HistoricTab extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("images/fro.jpeg"), fit: BoxFit.cover),
-          ),
-          height: 510,
-        ),
+      body: ListView(
+        children: [
+          for(final request in context.watch<RequestController>().closedRequests)
+            ListRequestTile(request: request,)
+        ],
       ),
       drawer: CustomDrawer(pageController),
     );

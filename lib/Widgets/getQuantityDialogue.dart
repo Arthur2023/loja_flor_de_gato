@@ -1,3 +1,5 @@
+import 'package:flor_de_gato/Models/Request.dart';
+import 'package:provider/provider.dart';
 import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +8,10 @@ class GetQuantityDialogue extends StatelessWidget {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   final Product product;
+  final Request request;
   final quantityController = TextEditingController();
 
-  GetQuantityDialogue(this.product);
+  GetQuantityDialogue(this.request, this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,11 @@ class GetQuantityDialogue extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("quantidade atual: ${product.quantity}", textAlign: TextAlign.right, style: TextStyle(fontSize:15), ),
+            Text(
+              "quantidade atual: ${request.getAvaliableQuantityFromProductAtMoment(product)}",
+              textAlign: TextAlign.right,
+              style: TextStyle(fontSize: 15),
+            ),
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
@@ -37,9 +44,9 @@ class GetQuantityDialogue extends StatelessWidget {
               validator: (text) {
                 if (text.isEmpty) {
                   return "você precisa informar o quanto vamos gastar nesse projeto";
-                } else if(int.tryParse(text) == null){
+                } else if (int.tryParse(text) == null) {
                   return "Valor inválido";
-                } else if(product.quantity < int.tryParse(text)){
+                } else if (request.getAvaliableQuantityFromProductAtMoment(product) < int.tryParse(text)) {
                   return "Estoque indisponível";
                 }
                 return null;

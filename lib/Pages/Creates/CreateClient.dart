@@ -86,53 +86,56 @@ class _CreateClientState extends State<CreateClient> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height: 20),
-              GestureDetector(
-                child: Consumer<Client>(builder: (_, client, __) {
-                  return Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: client.file != null
-                            ? FileImage(client.file)
-                            : client.image != null
-                                ? NetworkImage(client.image)
-                                : AssetImage("images/contact.png"),
-                        fit: BoxFit.contain,
+              Padding(
+                padding: const EdgeInsets.only(top:5, bottom: 20),
+                child: GestureDetector(
+                  child: Consumer<Client>(builder: (_, client, __) {
+                    return Container(
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: client.file != null
+                              ? FileImage(client.file)
+                              : client.image != null
+                                  ? NetworkImage(client.image)
+                                  : AssetImage("images/contact.png"),
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                  );
-                }),
-                onTap: () {
-                  return showDialog(
-                    context: context,
-                    builder: (context2) => GenericDialog(
-                      title: " Escolha a fonte da foto",
-                      contentText: "",
-                      submitButtonText: "câmera",
-                      submitButtonColor: null,
-                      onSubmit: () {
-                        ImagePicker.pickImage(source: ImageSource.camera)
-                            .then((file) {
-                          if (file == null) return;
-                          client.changeImage(file);
-                        });
-                        Navigator.pop(context);
-                      },
-                      dismissButtonText: "Galeria",
-                      dismissButtonColor: Colors.blue,
-                      onDismiss: () {
-                        ImagePicker.pickImage(source: ImageSource.gallery)
-                            .then((file) {
-                          if (file == null) return;
-                          client.changeImage(file);
-                        });
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                },
+                    );
+                  }),
+                  onTap: () {
+                    return showDialog(
+                      context: context,
+                      builder: (context2) => GenericDialog(
+                        title: " Escolha a fonte da foto",
+                        contentText: "",
+                        submitButtonText: "câmera",
+                        submitButtonColor: null,
+                        onSubmit: () {
+                          ImagePicker.pickImage(source: ImageSource.camera)
+                              .then((file) {
+                            if (file == null) return;
+                            client.changeImage(file);
+                          });
+                          Navigator.pop(context);
+                        },
+                        dismissButtonText: "Galeria",
+                        dismissButtonColor: Colors.blue,
+                        onDismiss: () {
+                          ImagePicker.pickImage(source: ImageSource.gallery)
+                              .then((file) {
+                            if (file == null) return;
+                            client.changeImage(file);
+                          });
+                          Navigator.pop(context);
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
               TextFormField(
                 initialValue: client.name,

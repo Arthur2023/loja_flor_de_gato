@@ -1,38 +1,31 @@
-import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flor_de_gato/Models/Request.dart';
+import 'package:flor_de_gato/Service/RequestService.dart';
 import 'package:flutter/cupertino.dart';
 
 class RequestController extends ChangeNotifier {
   RequestController() {
-    print(requestProducts.length);
+    load();
   }
 
-  num _estimatedTime = 0;
-  num _delivery = 0;
-
-  num get delivery => _delivery;
-
-  set delivery(num value) {
-    _delivery = value;
-    print("$_delivery");
+  Future<void> load() async {
+    List<Request> aux = await RequestService().getAll();
+    openRequests = aux.where((element) => element.isOpen).toList();
+    closedRequests = aux.where((element) => !element.isOpen).toList();
     notifyListeners();
   }
 
-  num get estimatedTime => _estimatedTime;
+  List<Request> openRequests = [];
+  List<Request> closedRequests = [];
 
-  set estimatedTime(num value) {
-    _estimatedTime = value;
-    print("$_estimatedTime");
-    notifyListeners();
-  }
-
-  List<Request> actualRequests = [];
-
-  List<Product> requestProducts = [];
-
-  Future<bool> add(Request r) async {
+  Future<bool> save(Request r) async {
     try {
-      actualRequests.add(r);
+
+      r.state = "open";
+
+      r = await RequestService().add(r);
+      if (r == null) throw Exception();
+      if (!await RequestService().addProducts(r)) throw Exception();
+      openRequests.add(r);
       notifyListeners();
       return true;
     } catch (e) {
@@ -41,26 +34,35 @@ class RequestController extends ChangeNotifier {
   }
 
   void remove(Request r) {
-    actualRequests.remove(r);
+    openRequests.remove(r);
     notifyListeners();
   }
 
-  void addProduct(Product p) {
-    requestProducts.add(p);
-    notifyListeners();
-  }
-  void removeProduct(Product p) {
-    requestProducts.remove(p);
-    notifyListeners();
+  Future<bool> update(Request r) async {
+    try {
+      if (!await RequestService().update(r)) throw Exception();
+      print('UPDATE R');
+      if (!await RequestService().addProducts(r)) throw Exception("ERRO ADD PRODUCTS");
+      print('ADDPRODUTS');
+      openRequests.firstWhere((element) => element.id == r.id).desclone(r);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
-  num get materialsPrice {
-    num totRequest = 0;
-    for (final product in requestProducts) totRequest += product.price;
-    return totRequest;
-  }
-
-  num get totPrice {
-    return (materialsPrice + _estimatedTime * 4.5) * 1.35 + delivery ;
+  Future<bool> closeRequest(Request r) async {
+    try {
+      r.state = "closed";
+      if (!await RequestService().update(r, updatedProducts: false)) throw Exception();
+      openRequests.removeWhere((element) => element.id == r.id);
+      closedRequests.add(r);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
