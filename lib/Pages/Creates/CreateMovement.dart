@@ -46,7 +46,7 @@ class _CreateMovementState extends State<CreateMovement> {
     markController.text = product.mark;
     colorController.text = product.color;
     shoppingController.text = product.shopping;
-    quantityController.text = product.quantity == 0 ? "" : product.quantity.toStringAsFixed(2);
+    quantityController.text = product.quantity == 0 ? "" : product.quantity.toStringAsFixed(0);
     priceController.text = product.price == 0 ? "" : product.price.toStringAsFixed(2);
     nameCategoryController.text = category.name;
   }
@@ -383,34 +383,6 @@ class _CreateMovementState extends State<CreateMovement> {
           ],
         ),
       )),
-      // floatingActionButton: widget.editing
-      //     ? null
-      //     : FloatingActionButton(
-      //         onPressed: () async {
-      //           if (!formkey.currentState.validate()) return;
-      //           formkey.currentState.save();
-      //           progressDialog(context);
-      //           if (!context.read<ProductController>().typemov) {
-      //             product.quantity = product.quantity * -1;
-      //             product.price = product.price * -1;
-      //           }
-      //
-      //           if (!await context.read<ProductController>().add(product, category)) {
-      //             Navigator.of(context).pop();
-      //             showSnackBar(
-      //               text: "Erro ao adicionar cliente",
-      //               scaffoldKey: scaffoldKey,
-      //             );
-      //             return;
-      //           }
-      //           print(product);
-      //           Navigator.of(context).pop();
-      //           Navigator.of(context).pop();
-      //           Navigator.of(context).pop();
-      //         },
-      //         backgroundColor: Color(0xFF442C2E),
-      //         child: Icon(Icons.save),
-      //       ),
     );
   }
 }

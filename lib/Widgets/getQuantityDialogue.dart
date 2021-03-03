@@ -1,5 +1,4 @@
 import 'package:flor_de_gato/Models/Request.dart';
-import 'package:provider/provider.dart';
 import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +15,8 @@ class GetQuantityDialogue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      elevation: 5,
+      backgroundColor: Color(0xFFFEDBD0),
       title: Text("Informe"),
       contentPadding: EdgeInsets.fromLTRB(24, 24, 24, 0),
       scrollable: true,
@@ -27,14 +28,16 @@ class GetQuantityDialogue extends StatelessWidget {
             Text(
               "quantidade atual: ${request.getAvaliableQuantityFromProductAtMoment(product)}",
               textAlign: TextAlign.right,
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 15, color: Color(0xFF442C2E)),
             ),
+            const SizedBox(height: 8),
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Quantidade",
                 labelStyle: TextStyle(color: Color(0xFF442C2E)),
                 border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
                   borderSide: BorderSide(
                     color: Color(0xFF442C2E),
                   ),
@@ -62,14 +65,14 @@ class GetQuantityDialogue extends StatelessWidget {
             int value = int.tryParse(quantityController.text);
             Navigator.pop(context, value);
           },
-          textColor: Colors.green,
+          textColor: Colors.green[800],
           child: Text("Confirmar"),
         ),
         FlatButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          textColor: Colors.red,
+          textColor: Colors.red[800],
           child: Text("Cancelar"),
         ),
       ],

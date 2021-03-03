@@ -48,7 +48,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 1.5,
+                    bottom: 2.5,
                     right: 12,
                     child: Icon(
                       Icons.local_florist_outlined, color: Color(0xFF442C2E), size: 11,

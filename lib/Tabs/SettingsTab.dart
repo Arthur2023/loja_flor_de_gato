@@ -1,3 +1,4 @@
+import 'package:flor_de_gato/Pages/Settings/PriceScreen.dart';
 import 'package:flor_de_gato/Widgets/CustomDrawer.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,9 @@ class SettingsTab extends StatelessWidget {
                   "Price",
                   style: TextStyle(color: Color(0xFF442C2E), fontSize: 20),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PriceScreen()));
+                },
               ),
             ),
           ),

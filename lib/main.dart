@@ -3,6 +3,7 @@ import 'package:flor_de_gato/Controllers/MovementController.dart';
 import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'Controllers/ConfigsController.dart';
 import 'Controllers/RequestController.dart';
 import 'Pages/HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -24,6 +26,10 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (_) => ClientController(),
+            lazy: false,
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ConfigsController(),
             lazy: false,
           ),
           ChangeNotifierProvider(

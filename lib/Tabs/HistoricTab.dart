@@ -1,13 +1,10 @@
 import 'package:flor_de_gato/Controllers/MovementController.dart';
-import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flor_de_gato/Controllers/RequestController.dart';
-import 'package:flor_de_gato/Models/Movement.dart';
 import 'package:flor_de_gato/Tiles/Drawer/ListMovimentTile.dart';
 import 'package:flor_de_gato/Tiles/Drawer/ListRequestTile.dart';
 import 'package:flor_de_gato/Widgets/CustomDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HistoricTab extends StatelessWidget {
   final PageController pageController;

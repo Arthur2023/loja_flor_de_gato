@@ -1,7 +1,9 @@
 import 'package:flor_de_gato/Controllers/ClientController.dart';
+import 'package:flor_de_gato/Controllers/ConfigsController.dart';
 import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flor_de_gato/Controllers/RequestController.dart';
 import 'package:flor_de_gato/Models/Client.dart';
+import 'package:flor_de_gato/Models/Configs.dart';
 import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flor_de_gato/Models/Request.dart';
 import 'package:flor_de_gato/Models/RequestProduct.dart';
@@ -77,16 +79,17 @@ class _CreateRequestState extends State<CreateRequest> {
             centerTitle: true,
             actions: [
               Consumer<Request>(builder: (_, request, __) {
+                Configs aux = context.watch<ConfigsController>().configs;
                 print(request);
-                print(request.totPrice());
+                print(request.totPrice(aux.priceHour, aux.margin));
                 return Center(
                     child: Padding(
-                  padding: EdgeInsets.only(right: 25),
-                  child: Text(
-                    "${(request.totPrice()).toStringAsFixed(2)} R\$",
-                    style: TextStyle(fontSize: 18, color: Color(0xFF442C2E)),
-                  ),
-                ));
+                      padding: EdgeInsets.only(right: 25),
+                      child: Text(
+                        "${(request.totPrice(aux.priceHour, aux.margin)).toStringAsFixed(2)} R\$",
+                        style: TextStyle(fontSize: 18, color: Color(0xFF442C2E)),
+                      ),
+                    ));
               })
             ],
           ),
@@ -305,7 +308,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                   children: [
                                     for (final rp in request.products)
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                                         child: SizedBox(
                                           height: 35,
                                           child: Card(
@@ -314,19 +317,20 @@ class _CreateRequestState extends State<CreateRequest> {
                                                 onLongPress: () {
                                                   showDialog(
                                                     context: context,
-                                                    builder: (context2) => GenericDialog(
-                                                      contentText: "Deseja realmente excluir?",
-                                                      title: "Excluir",
-                                                      submitButtonText: "Confirmar",
-                                                      onSubmit: () {
-                                                        request.removeRequestProduct(rp);
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                      submitButtonColor: Colors.red[700],
-                                                      dismissButtonColor: Colors.grey[700],
-                                                      dismissButtonText: "Cancelar",
-                                                      color: Color(0xFFFEDBD0),
-                                                    ),
+                                                    builder: (context2) =>
+                                                        GenericDialog(
+                                                          contentText: "Deseja realmente excluir?",
+                                                          title: "Excluir",
+                                                          submitButtonText: "Confirmar",
+                                                          onSubmit: () {
+                                                            request.removeRequestProduct(rp);
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                          submitButtonColor: Colors.red[700],
+                                                          dismissButtonColor: Colors.grey[700],
+                                                          dismissButtonText: "Cancelar",
+                                                          color: Color(0xFFFEDBD0),
+                                                        ),
                                                   );
                                                 },
                                                 child: Padding(
@@ -479,43 +483,45 @@ class _CreateRequestState extends State<CreateRequest> {
                                   child: SizedBox(
                                     height: 45,
                                     child: RaisedButton(
-                                      child: Text(
-                                        "Cancel",
-                                        style: TextStyle(color: Color(0xFFFEEAE6), fontSize: 18),
-                                      ),
-                                      color: Color(0xFF442C2E),
-                                      onPressed: () async {
-                                        if (!widget.editing) {
-                                          Navigator.of(context).pop();
-                                          return;
-                                        } else {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context2) => GenericDialog(
-                                              title: "Confirmar",
-                                              contentText: "Deseja excluir este pedido?",
-                                              submitButtonText: "Excluir",
-                                              submitButtonColor: Colors.red,
-                                              onSubmit: () async {
-                                                progressDialog(context);
-                                                if (!await context.read<RequestController>().cancelRequest(request)) {
-                                                  Navigator.of(context).pop();
-                                                  showSnackBar(
-                                                    text: "Erro ao atualizar pedido",
-                                                    scaffoldKey: scaffoldKey,
-                                                  );
-                                                  print(client);
-                                                  return;
-                                                }
-                                                Navigator.of(context).pop();
-                                                Navigator.of(context).pop();
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          );
-                                          Navigator.pop(context);
+                                        child: Text(
+                                          "Cancel",
+                                          style: TextStyle(color: Color(0xFFFEEAE6), fontSize: 18),
+                                        ),
+                                        color: Color(0xFF442C2E),
+                                        onPressed: () {
+                                          if (widget.editing) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context2) =>
+                                                  GenericDialog(
+                                                    title: "Confirmar",
+                                                    contentText: "Deseja confirmar o cancelamento?",
+                                                    submitButtonText: "Confirmar",
+                                                    submitButtonColor: Colors.red[800],
+                                                    onSubmit: () async {
+                                                      progressDialog(context);
+                                                      if (!await context.read<RequestController>().cancelRequest(
+                                                          request)) {
+                                                        Navigator.of(context).pop();
+                                                        showSnackBar(
+                                                          text: "Erro ao atualizar pedido",
+                                                          scaffoldKey: scaffoldKey,
+                                                        );
+                                                        print("Correto");
+                                                        return;
+                                                      }
+                                                      Navigator.of(context).pop();
+                                                      Navigator.of(context).pop();
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  ),
+                                            );
+                                          } else {
+                                            Navigator.of(context).pop();
+                                            print("certo");
+                                            return;
+                                          }
                                         }
-                                      },
                                     ),
                                   ),
                                 ),
@@ -534,7 +540,8 @@ class _CreateRequestState extends State<CreateRequest> {
                                       onPressed: () async {
                                         if (!formkey.currentState.validate()) return;
                                         formkey.currentState.save();
-                                        request.price = request.totPrice();
+                                        Configs aux = context.read<ConfigsController>().configs;
+                                        request.price = request.totPrice(aux.priceHour, aux.margin);
                                         progressDialog(context);
                                         if (widget.editing) {
                                           print('##############################################');
@@ -578,7 +585,8 @@ class _CreateRequestState extends State<CreateRequest> {
                                     progressDialog(context);
                                     if (!formkey.currentState.validate()) return;
                                     formkey.currentState.save();
-                                    request.price = request.totPrice();
+                                    Configs aux = context.read<ConfigsController>().configs;
+                                    request.price = request.totPrice(aux.priceHour, aux.margin);
                                     progressDialog(context);
                                     bool execute = await context.read<RequestController>().closeRequest(request);
                                     print(request.state);

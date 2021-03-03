@@ -15,6 +15,7 @@ class ListProductTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(5),
       child: ListTile(
+
         trailing: Text(
         product.quantity.toString()+"g",
         style: TextStyle(fontSize: 20, color: Color(0xFF442C2E)),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flor_de_gato/Models/RequestProduct.dart';
+import 'package:flor_de_gato/Service/ProductService.dart';
 import 'package:flor_de_gato/Service/RequestService.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -16,22 +17,27 @@ class Request extends ChangeNotifier {
   num delivery;
   String state = "";
 
+
   void changeEstimatedTime(num value) {
     print(value);
     estimatedTime = value;
     notifyListeners();
   }
 
-  num totPrice() {
-    print(materialsPrice);
-    print(estimatedTime);
-    print(delivery);
-    return ((materialsPrice ?? 0) + (estimatedTime * 4.5)) * 1.35 + delivery;
-  }
-
   void changeDelivery(num value) {
     delivery = value;
     notifyListeners();
+  }
+
+  num totPrice(num priceHour, num margin) {
+    if(isOpen) {
+      print(materialsPrice);
+      print(estimatedTime);
+      print(delivery);
+      return ((materialsPrice ?? 0) + (estimatedTime * priceHour)) * (1 + (margin / 100)) + delivery;
+    }else {
+      return price;
+    }
   }
 
   List<RequestProduct> products = [];
@@ -143,7 +149,9 @@ class Request extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeRequestProduct(RequestProduct p) {
+  Future<void> removeRequestProduct(RequestProduct p) async {
+    p.product.quantity += p.quantity;
+    await ProductService().update(p.product);
     products.remove(p);
     notifyListeners();
   }
