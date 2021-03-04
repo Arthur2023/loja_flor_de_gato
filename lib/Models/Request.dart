@@ -17,6 +17,15 @@ class Request extends ChangeNotifier {
   num delivery;
   String state = "";
 
+  DateTime get dateTime {
+    List<String> m = estimatedDate.split("/");
+
+    return DateTime(
+      int.parse(m[2]),
+      int.parse(m[1]),
+      int.parse(m[0]),
+    );
+  }
 
   void changeEstimatedTime(num value) {
     print(value);
@@ -30,12 +39,12 @@ class Request extends ChangeNotifier {
   }
 
   num totPrice(num priceHour, num margin) {
-    if(isOpen) {
+    if (isOpen) {
       print(materialsPrice);
       print(estimatedTime);
       print(delivery);
       return ((materialsPrice ?? 0) + (estimatedTime * priceHour)) * (1 + (margin / 100)) + delivery;
-    }else {
+    } else {
       return price;
     }
   }

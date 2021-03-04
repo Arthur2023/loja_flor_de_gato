@@ -2,6 +2,7 @@ import 'package:flor_de_gato/Controllers/MovementController.dart';
 import 'package:flor_de_gato/Controllers/ProductController.dart';
 import 'package:flor_de_gato/Models/Movement.dart';
 import 'package:flor_de_gato/Models/Product.dart';
+import 'package:flor_de_gato/Widgets/MovementDialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,10 @@ class ListMovementTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(5),
       child: ListTile(
+        onTap: (){
+          showDialog(context: context,
+          builder: (context) => MovementDialog(movement: movement));
+        },
         tileColor: Color(0xFF442C2E),
         title: SizedBox(
             height: 70,
@@ -31,16 +36,11 @@ class ListMovementTile extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Text(
-                            product.mark + " ",
-                            style: TextStyle(fontSize: 25, color: Color(0xFFFEDBD0)),
+                            product.mark,
+                            style: TextStyle(fontSize: 20, color: Color(0xFFFEDBD0)),
                             textAlign: TextAlign.start,
                           ),
                         ),
-                        Text(
-                          product.color,
-                          style: TextStyle(fontSize: 25, color: Color(0xFFFEDBD0)),
-                          textAlign: TextAlign.start,
-                        )
                       ],
                     ),
                     Text(

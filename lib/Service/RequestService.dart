@@ -30,9 +30,13 @@ class RequestService {
   }
 
   Future<Request> add(Request request) async {
-    DocumentReference documentReference = await collectionReference.add(request.toMap());
-    request.id = documentReference.id;
-    return request;
+    try{
+      DocumentReference documentReference = await collectionReference.add(request.toMap());
+      request.id = documentReference.id;
+      return request;
+    } catch(e){
+      return null;
+    }
   }
 
   Future<bool> addProducts(Request r) async {

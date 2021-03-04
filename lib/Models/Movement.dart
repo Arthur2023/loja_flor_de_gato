@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'Product.dart';
 
 class Movement {
@@ -7,11 +6,13 @@ class Movement {
   Timestamp date;
   String productID;
   num quantity;
+  num price;
+  String shopping;
 
   Product product;
 
   Map<String, dynamic> toMap() {
-    return {"date": Timestamp.now(), "productID": productID, "quantity": quantity};
+    return {"date": Timestamp.now(), "productID": productID, "quantity": quantity, "price":price, "shopping":shopping};
   }
 
   Movement.fromDocumment(DocumentSnapshot documentSnapshot) {
@@ -19,11 +20,15 @@ class Movement {
     date = documentSnapshot.data()["date"];
     productID = documentSnapshot.data()["productID"];
     quantity = documentSnapshot.data()["quantity"];
+    price = documentSnapshot.data()["price"];
+    shopping = documentSnapshot.data()["shopping"];
   }
 
   Movement.fromProduct(Product product) {
     productID = product.id;
     quantity = product.quantity;
+    price = product.price;
+    shopping = product.shopping;
   }
 
 }

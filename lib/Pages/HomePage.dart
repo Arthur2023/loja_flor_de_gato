@@ -3,7 +3,7 @@ import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flor_de_gato/Models/Request.dart';
 import 'package:flor_de_gato/Tabs/ClientTab.dart';
 import 'package:flor_de_gato/Tabs/HistoricTab.dart';
-import 'package:flor_de_gato/Tabs/HomeTab.dart';
+import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/Tabs/Home/HomeTab.dart';
 import 'package:flor_de_gato/Tabs/InventoryTab.dart';
 import 'package:flor_de_gato/Tabs/RequestTab.dart';
 import 'package:flor_de_gato/Tabs/SettingsTab.dart';

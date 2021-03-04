@@ -52,7 +52,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                           ),
                           validator: (text) {
                             if (text.isEmpty) {
-                              return "Sua categoria precisa de um nome!";
+                              return "Your category needs a name!";
                             }
                             return null;
                           },
@@ -75,7 +75,7 @@ class _CreateCategoryState extends State<CreateCategory> {
             if (!await await context.read<ProductController>().addCategory(category)) {
               Navigator.of(context).pop();
               showSnackBar(
-                text: "Erro ao adicionar cliente",
+                text: "Error adding category",
                 scaffoldKey: scaffoldKey,
               );
               return;

@@ -20,13 +20,6 @@ class CustomDrawer extends StatelessWidget {
           padding: EdgeInsets.symmetric(),
           children: <Widget>[
             Container(
-              // decoration: BoxDecoration(
-              //   color: Colors.white,
-              //   image: DecorationImage(
-              //       image:AssetImage("images/nature1.jpg"),
-              //   fit: BoxFit.cover
-              //   ),
-              // ),
               height: 225,
               padding: EdgeInsets.all(10),
               child: Stack(

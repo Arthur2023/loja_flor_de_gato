@@ -41,7 +41,8 @@ class RequestTab extends StatelessWidget {
       body: ListView(
         children: [
           for(final request in context.watch<RequestController>().openRequests)
-            ListRequestTile(request: request)
+            ListRequestTile(request: request),
+          SizedBox(height: 90,)
         ],
       ),
       drawer: CustomDrawer(pageController),

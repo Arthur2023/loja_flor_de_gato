@@ -51,9 +51,9 @@ class _CreateClientState extends State<CreateClient> {
                     showDialog(
                       context: context,
                       builder: (context2) => GenericDialog(
-                        title: "Confirmar",
-                        contentText: "Deseja excluir este pedido?",
-                        submitButtonText: "Excluir",
+                        title: "Confirm",
+                        contentText: "Do you want to delete this order?",
+                        submitButtonText: "delete",
                         submitButtonColor: Colors.red,
                         onSubmit: () async {
                           progressDialog(context);
@@ -62,7 +62,7 @@ class _CreateClientState extends State<CreateClient> {
                               .remove(client)) {
                             Navigator.of(context).pop();
                             showSnackBar(
-                              text: "Erro ao adicionar cliente",
+                              text: "Error adding customer",
                               scaffoldKey: scaffoldKey,
                             );
                             print(client);
@@ -110,9 +110,9 @@ class _CreateClientState extends State<CreateClient> {
                     return showDialog(
                       context: context,
                       builder: (context2) => GenericDialog(
-                        title: " Escolha a fonte da foto",
+                        title: "Choose the source of the photo",
                         contentText: "",
-                        submitButtonText: "câmera",
+                        submitButtonText: "camera",
                         submitButtonColor: null,
                         onSubmit: () {
                           ImagePicker.pickImage(source: ImageSource.camera)
@@ -122,7 +122,7 @@ class _CreateClientState extends State<CreateClient> {
                           });
                           Navigator.pop(context);
                         },
-                        dismissButtonText: "Galeria",
+                        dismissButtonText: "Gallery",
                         dismissButtonColor: Colors.blue,
                         onDismiss: () {
                           ImagePicker.pickImage(source: ImageSource.gallery)
@@ -150,7 +150,7 @@ class _CreateClientState extends State<CreateClient> {
                 ),
                 validator: (text) {
                   if (text.isEmpty) {
-                    return "Seu cliente precisa de um nome!";
+                    return "Your customer needs a name!";
                   }
                   return null;
                 },
@@ -174,7 +174,7 @@ class _CreateClientState extends State<CreateClient> {
                   ),
                   validator: (text) {
                     if (!emailValid(text)) {
-                      return "Email inválido!";
+                      return "Invalid email!";
                     }
                     return null;
                   },
@@ -197,7 +197,7 @@ class _CreateClientState extends State<CreateClient> {
                 ),
                 validator: (text) {
                   if (text.isEmpty) {
-                    return "Seu cliente precisa de um número!";
+                    return "Your customer needs a number!";
                   }
                   return null;
                 },
@@ -256,7 +256,7 @@ class _CreateClientState extends State<CreateClient> {
               if (!await context.read<ClientController>().update(client)) {
                 Navigator.of(context).pop();
                 showSnackBar(
-                  text: "Erro ao atualizar cliente",
+                  text: "Error updating client",
                   scaffoldKey: scaffoldKey,
                 );
                 return;
@@ -265,7 +265,7 @@ class _CreateClientState extends State<CreateClient> {
               if (!await context.read<ClientController>().add(client)) {
                 Navigator.of(context).pop();
                 showSnackBar(
-                  text: "Erro ao adicionar cliente",
+                  text: "Error adding customer",
                   scaffoldKey: scaffoldKey,
                 );
                 return;

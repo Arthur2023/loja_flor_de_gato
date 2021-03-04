@@ -1,4 +1,5 @@
 import 'package:flor_de_gato/Controllers/ClientController.dart';
+import 'package:flor_de_gato/Controllers/ConfigsController.dart';
 import 'package:flor_de_gato/Models/Client.dart';
 import 'package:flor_de_gato/Models/Request.dart';
 import 'package:flor_de_gato/Pages/Creates/CreateRequest.dart';
@@ -16,7 +17,13 @@ class ListRequestTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(5),
       child: ListTile(
-        onTap: (){
+        trailing: Padding(
+          padding: EdgeInsets.only(right: 10, top:14),
+            child: Text(request
+                .totPrice(context.watch<ConfigsController>().configs.priceHour,
+                    context.watch<ConfigsController>().configs.margin)
+                .toStringAsFixed(2) + " R\$", style: TextStyle(color: Color(0xFFFEDBD0), fontSize: 15),)),
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -32,7 +39,7 @@ class ListRequestTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical:5),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Text(
                     client.name,
                     style: TextStyle(fontSize: 25, color: Color(0xFFFEDBD0)),

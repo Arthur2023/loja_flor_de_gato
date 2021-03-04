@@ -10,11 +10,14 @@ import 'package:flor_de_gato/Models/RequestProduct.dart';
 import 'package:flor_de_gato/Pages/Creates/CreateClient.dart';
 import 'package:flor_de_gato/Pages/Search/ClientSearch.dart';
 import 'package:flor_de_gato/Pages/Search/ProductSearch.dart';
+import 'package:flor_de_gato/Widgets/DateFormatter.dart';
 import 'package:flor_de_gato/Widgets/GenericDialog.dart';
 import 'package:flor_de_gato/Widgets/ProgressDialogue.dart';
 import 'package:flor_de_gato/Widgets/ShowSnackBar.dart';
+import 'package:flor_de_gato/Widgets/Validators.dart';
 import 'package:flor_de_gato/Widgets/getQuantityDialogue.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CreateRequest extends StatefulWidget {
@@ -84,12 +87,12 @@ class _CreateRequestState extends State<CreateRequest> {
                 print(request.totPrice(aux.priceHour, aux.margin));
                 return Center(
                     child: Padding(
-                      padding: EdgeInsets.only(right: 25),
-                      child: Text(
-                        "${(request.totPrice(aux.priceHour, aux.margin)).toStringAsFixed(2)} R\$",
-                        style: TextStyle(fontSize: 18, color: Color(0xFF442C2E)),
-                      ),
-                    ));
+                  padding: EdgeInsets.only(right: 25),
+                  child: Text(
+                    "${(request.totPrice(aux.priceHour, aux.margin)).toStringAsFixed(2)} R\$",
+                    style: TextStyle(fontSize: 18, color: Color(0xFF442C2E)),
+                  ),
+                ));
               })
             ],
           ),
@@ -146,7 +149,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                   ),
                                   validator: (text) {
                                     if (text.isEmpty) {
-                                      return "Ainda faltam algumas informacoes!";
+                                      return "Some information is still missing!";
                                     }
 
                                     return null;
@@ -206,7 +209,7 @@ class _CreateRequestState extends State<CreateRequest> {
                               ),
                               validator: (text) {
                                 if (text.isEmpty) {
-                                  return "Ainda faltam algumas informacoes!";
+                                  return "Some information is still missing!";
                                 }
 
                                 return null;
@@ -248,6 +251,14 @@ class _CreateRequestState extends State<CreateRequest> {
                                 ),
                               ),
                             ),
+                            inputFormatters: <TextInputFormatter>[DateFormatter()],
+                            validator: (value) {
+                              if (value.length == 10) {
+                                return isValidDate(value);
+                              } else {
+                                return 'Invalid date';
+                              }
+                            },
                             onSaved: (text) {
                               request.estimatedDate = text;
                             },
@@ -317,20 +328,19 @@ class _CreateRequestState extends State<CreateRequest> {
                                                 onLongPress: () {
                                                   showDialog(
                                                     context: context,
-                                                    builder: (context2) =>
-                                                        GenericDialog(
-                                                          contentText: "Deseja realmente excluir?",
-                                                          title: "Excluir",
-                                                          submitButtonText: "Confirmar",
-                                                          onSubmit: () {
-                                                            request.removeRequestProduct(rp);
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                          submitButtonColor: Colors.red[700],
-                                                          dismissButtonColor: Colors.grey[700],
-                                                          dismissButtonText: "Cancelar",
-                                                          color: Color(0xFFFEDBD0),
-                                                        ),
+                                                    builder: (context2) => GenericDialog(
+                                                      contentText: "Do you really want to delete ?",
+                                                      title: "Delete",
+                                                      submitButtonText: "Confirm",
+                                                      onSubmit: () {
+                                                        request.removeRequestProduct(rp);
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                      submitButtonColor: Colors.red[700],
+                                                      dismissButtonColor: Colors.grey[700],
+                                                      dismissButtonText: "Cancel",
+                                                      color: Color(0xFFFEDBD0),
+                                                    ),
                                                   );
                                                 },
                                                 child: Padding(
@@ -492,37 +502,34 @@ class _CreateRequestState extends State<CreateRequest> {
                                           if (widget.editing) {
                                             showDialog(
                                               context: context,
-                                              builder: (context2) =>
-                                                  GenericDialog(
-                                                    title: "Confirmar",
-                                                    contentText: "Deseja confirmar o cancelamento?",
-                                                    submitButtonText: "Confirmar",
-                                                    submitButtonColor: Colors.red[800],
-                                                    onSubmit: () async {
-                                                      progressDialog(context);
-                                                      if (!await context.read<RequestController>().cancelRequest(
-                                                          request)) {
-                                                        Navigator.of(context).pop();
-                                                        showSnackBar(
-                                                          text: "Erro ao atualizar pedido",
-                                                          scaffoldKey: scaffoldKey,
-                                                        );
-                                                        print("Correto");
-                                                        return;
-                                                      }
-                                                      Navigator.of(context).pop();
-                                                      Navigator.of(context).pop();
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                  ),
+                                              builder: (context2) => GenericDialog(
+                                                title: "cancellation",
+                                                contentText: "Do you really want to cancel this order?",
+                                                submitButtonText: "Confirm",
+                                                submitButtonColor: Colors.red[800],
+                                                onSubmit: () async {
+                                                  progressDialog(context);
+                                                  if (!await context.read<RequestController>().cancelRequest(request)) {
+                                                    Navigator.of(context).pop();
+                                                    showSnackBar(
+                                                      text: "error updating order",
+                                                      scaffoldKey: scaffoldKey,
+                                                    );
+                                                    print("Correct");
+                                                    return;
+                                                  }
+                                                  Navigator.of(context).pop();
+                                                  Navigator.of(context).pop();
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
                                             );
                                           } else {
                                             Navigator.of(context).pop();
                                             print("certo");
                                             return;
                                           }
-                                        }
-                                    ),
+                                        }),
                                   ),
                                 ),
                                 SizedBox(
@@ -548,7 +555,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                           if (!await context.read<RequestController>().update(request)) {
                                             Navigator.of(context).pop();
                                             showSnackBar(
-                                              text: "Erro ao atualizar pedido",
+                                              text: "Error updating order",
                                               scaffoldKey: scaffoldKey,
                                             );
                                             return;
@@ -556,7 +563,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                         } else if (!await context.read<RequestController>().save(request)) {
                                           Navigator.of(context).pop();
                                           showSnackBar(
-                                            text: "Erro ao adicionar pedido",
+                                            text: "Error adding order",
                                             scaffoldKey: scaffoldKey,
                                           );
                                           return;
@@ -578,7 +585,7 @@ class _CreateRequestState extends State<CreateRequest> {
                               child: RaisedButton(
                                   color: Colors.green[800],
                                   child: Text(
-                                    "Encerrar",
+                                    "Conclude",
                                     style: TextStyle(color: Colors.white, fontSize: 20),
                                   ),
                                   onPressed: () async {
@@ -595,7 +602,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                     } else {
-                                      showSnackBar(text: "erro ao encerrar pedido", scaffoldKey: scaffoldKey);
+                                      showSnackBar(text: "error when ending order", scaffoldKey: scaffoldKey);
                                     }
                                   }),
                             ),

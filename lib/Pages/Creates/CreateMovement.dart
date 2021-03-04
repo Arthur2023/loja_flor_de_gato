@@ -140,7 +140,7 @@ class _CreateMovementState extends State<CreateMovement> {
                     ),
                     validator: (text) {
                       if (text.isEmpty) {
-                        return "Ainda faltam algumas informacoes!";
+                        return "Some information is still missing!";
                       }
                       return null;
                     },
@@ -165,7 +165,7 @@ class _CreateMovementState extends State<CreateMovement> {
                       ),
                       validator: (text) {
                         if (text.isEmpty) {
-                          return "Ainda faltam algumas informacoes!";
+                          return "Some information is still missing!";
                         }
                         return null;
                       },
@@ -189,7 +189,7 @@ class _CreateMovementState extends State<CreateMovement> {
                     ),
                     validator: (text) {
                       if (text.isEmpty) {
-                        return "Ainda faltam algumas informacoes!";
+                        return "Some information is still missing!";
                       }
                       return null;
                     },
@@ -214,7 +214,7 @@ class _CreateMovementState extends State<CreateMovement> {
                         ),
                         validator: (text) {
                           if (text.isEmpty) {
-                            return "Ainda faltam algumas informacoes!";
+                            return "Some information is still missing!";
                           }
                           return null;
                         },
@@ -243,7 +243,7 @@ class _CreateMovementState extends State<CreateMovement> {
                     ),
                     validator: (text) {
                       if (text.isEmpty) {
-                        return "Ainda faltam algumas informacoes!";
+                        return "Some information is still missing!";
                       }
                       return null;
                     },
@@ -272,7 +272,7 @@ class _CreateMovementState extends State<CreateMovement> {
                     ),
                     validator: (text) {
                       if (text.isEmpty) {
-                        return "Ainda faltam algumas informacoes!";
+                        return "Some information is still missing!";
                       }
                       return null;
                     },
@@ -333,7 +333,7 @@ class _CreateMovementState extends State<CreateMovement> {
                 ),
                 validator: (text) {
                   if (text.isEmpty) {
-                    return "Ainda faltam algumas informacoes!";
+                    return "Some information is still missing!";
                   }
                   return null;
                 },
@@ -350,7 +350,7 @@ class _CreateMovementState extends State<CreateMovement> {
                       ? null
                       : RaisedButton(
                           child: Text(
-                            "Salvar",
+                            "Save",
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
                           color: Color(0xFF442C2E),
@@ -368,7 +368,7 @@ class _CreateMovementState extends State<CreateMovement> {
                             if (!await context.read<ProductController>().add(product, category)) {
                               Navigator.of(context).pop();
                               showSnackBar(
-                                text: "Erro ao adicionar cliente",
+                                text: "Error adding movement",
                                 scaffoldKey: scaffoldKey,
                               );
                               return;
