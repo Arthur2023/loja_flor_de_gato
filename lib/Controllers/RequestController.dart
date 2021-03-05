@@ -66,6 +66,7 @@ class RequestController extends ChangeNotifier {
 
   void homeChangeEstimatedTime(num value, Request r) {
     r.estimatedTime += value;
+    RequestService().update(r);
     notifyListeners();
   }
 

@@ -70,7 +70,7 @@ class Request extends ChangeNotifier {
   }
 
   bool get isOpen {
-    switch (state) {
+    switch (state?? "") {
       case "open":
       case "awaiting":
         return true;
@@ -135,7 +135,7 @@ class Request extends ChangeNotifier {
 
   num get materialsPrice {
     num totRequest = 0;
-    for (final p in products) totRequest += p.product.price;
+    for (final p in products) totRequest += p.price;
     return totRequest;
   }
 

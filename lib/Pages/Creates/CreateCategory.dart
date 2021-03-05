@@ -22,6 +22,7 @@ class _CreateCategoryState extends State<CreateCategory> {
         key: scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Color(0xFF442C2E)),
           backgroundColor: Color(0xFFFEDBD0),
           title: Text(
             "Category",

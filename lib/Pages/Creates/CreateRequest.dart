@@ -314,63 +314,63 @@ class _CreateRequestState extends State<CreateRequest> {
                                 ],
                               ),
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    for (final rp in request.products)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                                        child: SizedBox(
-                                          height: 35,
-                                          child: Card(
-                                            color: Colors.white,
-                                            child: InkWell(
-                                                onLongPress: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context2) => GenericDialog(
-                                                      contentText: "Do you really want to delete ?",
-                                                      title: "Delete",
-                                                      submitButtonText: "Confirm",
-                                                      onSubmit: () {
-                                                        request.removeRequestProduct(rp);
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                      submitButtonColor: Colors.red[700],
-                                                      dismissButtonColor: Colors.grey[700],
-                                                      dismissButtonText: "Cancel",
-                                                      color: Color(0xFFFEDBD0),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        rp.product.mark + ", " + rp.product.color,
-                                                        textAlign: TextAlign.start,
-                                                      ),
-                                                      Text(
-                                                        rp.quantity.toString(),
-                                                        textAlign: TextAlign.end,
-                                                      ),
-                                                    ],
+                                for (final rp in request.products ?? [])
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                    child: SizedBox(
+                                      height: 35,
+                                      child: Card(
+                                        color: Colors.white,
+                                        child: InkWell(
+                                            onLongPress: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context2) => GenericDialog(
+                                                  contentText: "Do you really want to delete ?",
+                                                  title: "Delete",
+                                                  submitButtonText: "Confirm",
+                                                  onSubmit: () {
+                                                    request.removeRequestProduct(rp);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  submitButtonColor: Colors.red[700],
+                                                  dismissButtonColor: Colors.grey[700],
+                                                  dismissButtonText: "Cancel",
+                                                  color: Color(0xFFFEDBD0),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    rp.product.mark + ", " + rp.product.color,
+                                                    textAlign: TextAlign.start,
                                                   ),
-                                                )),
-                                          ),
-                                        ),
+                                                  Text(
+                                                    rp.quantity.toString(),
+                                                    textAlign: TextAlign.end,
+                                                  ),
+                                                ],
+                                              ),
+                                            )),
                                       ),
-                                    if (request.isOpen)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                        child: Card(
-                                          color: Color(0xFF442C2E),
-                                          child: InkWell(
-                                            child: SizedBox(
-                                              height: 35,
-                                              child: Expanded(
+                                    ),
+                                  ),
+                                if (request.isOpen)
+                                  Row(
+                                    // mainAxisAlignment: MainAxisAlignment.,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                          child: Card(
+                                            color: Color(0xFF442C2E),
+                                            child: InkWell(
+                                              child: SizedBox(
+                                                height: 35,
                                                 child: RaisedButton(
                                                   onPressed: () async {
                                                     Product aux = (await Navigator.push(
@@ -389,8 +389,9 @@ class _CreateRequestState extends State<CreateRequest> {
                                                       RequestProduct rp = RequestProduct.fromProduct(aux);
                                                       rp.quantity = quantity;
                                                       if (rp.product.quantity < quantity) return;
-                                                      rp.product.price =
-                                                          (rp.product.price / rp.product.quantity) * quantity;
+                                                      rp.price = ((rp.product.price / rp.product.quantity) * quantity);
+                                                      rp.product.price -=
+                                                          ((rp.product.price / rp.product.quantity) * quantity);
 
                                                       request.addRequestProduct(rp);
                                                     }
@@ -408,8 +409,8 @@ class _CreateRequestState extends State<CreateRequest> {
                                           ),
                                         ),
                                       ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
                               ],
                             ),
                           ),
@@ -493,6 +494,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                   child: SizedBox(
                                     height: 45,
                                     child: RaisedButton(
+                                        shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                         child: Text(
                                           "Cancel",
                                           style: TextStyle(color: Color(0xFFFEEAE6), fontSize: 18),
@@ -539,6 +541,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                   child: SizedBox(
                                     height: 45,
                                     child: RaisedButton(
+                                      shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                       child: Text(
                                         "Save",
                                         style: TextStyle(color: Color(0xFFFEEAE6), fontSize: 18),
@@ -582,12 +585,16 @@ class _CreateRequestState extends State<CreateRequest> {
                           if (widget.editing && request.isOpen)
                             SizedBox(
                               height: 50,
-                              child: RaisedButton(
-                                  color: Colors.green[800],
+                              child: OutlineButton(
+                                  color: Colors.green[600],
                                   child: Text(
                                     "Conclude",
-                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                    style: TextStyle(color: Colors.green[800], fontSize: 20),
                                   ),
+                                  borderSide: BorderSide(
+                                    color: Colors.green[600],
+                                  ),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   onPressed: () async {
                                     progressDialog(context);
                                     if (!formkey.currentState.validate()) return;

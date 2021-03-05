@@ -5,6 +5,7 @@ class RequestProduct {
   String id;
   String productID;
   int quantity;
+  num price;
 
   Product product;
 
@@ -12,6 +13,7 @@ class RequestProduct {
     id = documentSnapshot.id;
     productID = documentSnapshot["productID"];
     quantity = documentSnapshot["quantity"];
+    price = documentSnapshot["price"];
   }
 
   RequestProduct.fromProduct(Product p) {
@@ -19,11 +21,12 @@ class RequestProduct {
     productID = p.id;
     quantity = 0;
     product = p;
+    price = 0;
   }
 
   Map<String, dynamic> toMap() => {
         "productID": productID,
         "quantity": quantity,
+        "price": price,
       };
-
 }

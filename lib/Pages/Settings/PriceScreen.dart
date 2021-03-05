@@ -1,6 +1,4 @@
 import 'package:flor_de_gato/Controllers/ConfigsController.dart';
-import 'package:flor_de_gato/Models/Configs.dart';
-import 'package:flor_de_gato/Service/ConfigsService.dart';
 import 'package:flor_de_gato/Widgets/ProgressDialogue.dart';
 import 'package:flor_de_gato/Widgets/ShowSnackBar.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +16,6 @@ class _PriceScreenState extends State<PriceScreen> {
   final priceHourController = TextEditingController();
 
   final marginController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    // priceHourController.text = context.watch<ConfigsController>().configs.priceHour.toString();
-    // marginController.text = context.watch<ConfigsController>().configs.margin.toString();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +44,7 @@ class _PriceScreenState extends State<PriceScreen> {
                     color: Colors.white,
                     child: Center(
                       child: Text(
-                        "Preço por hora:",
+                        "working hour:",
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -69,7 +60,7 @@ class _PriceScreenState extends State<PriceScreen> {
                       ),
                     ),
                     validator: (text) {
-                      if (text.isEmpty) return "Campo obrigatorio";
+                      if (text.isEmpty) return "Required field";
                       return null;
                     },
                     onSaved: (text) {
@@ -87,7 +78,7 @@ class _PriceScreenState extends State<PriceScreen> {
                     color: Colors.white,
                     child: Center(
                       child: Text(
-                        "Margem aplicada:",
+                        "applied margin:",
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -103,7 +94,7 @@ class _PriceScreenState extends State<PriceScreen> {
                       ),
                     ),
                     validator: (text) {
-                      if (text.isEmpty) return "Campo obrigatorio";
+                      if (text.isEmpty) return "Required field";
                       return null;
                     },
                     onSaved: (text) {
@@ -119,7 +110,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 child: RaisedButton(
                   color: Color(0xFF442C2E),
                   child: Text(
-                    "Salvar",
+                    "Save",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   onPressed: () async {
@@ -129,7 +120,7 @@ class _PriceScreenState extends State<PriceScreen> {
                     if (!await context.read<ConfigsController>().update()) {
                       Navigator.of(context).pop();
                       showSnackBar(
-                        text: "Erro ao adicionar cliente",
+                        text: "Saving error",
                         scaffoldKey: scaffoldKey,
                       );
                       return;

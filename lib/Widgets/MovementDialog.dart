@@ -43,7 +43,7 @@ class _MovementDialogState extends State<MovementDialog> {
     colorController.text = product.color;
 
     return Padding(
-      padding: const EdgeInsets.all(22),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical:85),
       child: Card(
         color: Color(0xFFFEEAE6),
         child: Padding(

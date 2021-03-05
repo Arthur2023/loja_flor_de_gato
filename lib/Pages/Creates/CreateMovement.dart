@@ -3,7 +3,6 @@ import 'package:flor_de_gato/Models/Category.dart';
 import 'package:flor_de_gato/Models/Product.dart';
 import 'package:flor_de_gato/Pages/Search/CategorySearch.dart';
 import 'package:flor_de_gato/Pages/Search/ProductSearch.dart';
-import 'package:flor_de_gato/Widgets/GenericDialog.dart';
 import 'package:flor_de_gato/Widgets/ProgressDialogue.dart';
 import 'package:flor_de_gato/Widgets/ShowSnackBar.dart';
 import 'package:flutter/material.dart';
@@ -349,6 +348,7 @@ class _CreateMovementState extends State<CreateMovement> {
                   child: widget.editing
                       ? null
                       : RaisedButton(
+                    shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           child: Text(
                             "Save",
                             style: TextStyle(fontSize: 18, color: Colors.white),
