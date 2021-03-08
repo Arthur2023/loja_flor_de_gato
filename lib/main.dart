@@ -1,11 +1,11 @@
-import 'package:flor_de_gato/Controllers/ClientController.dart';
-import 'package:flor_de_gato/Controllers/MovementController.dart';
-import 'package:flor_de_gato/Controllers/ProductController.dart';
+import 'package:flor_de_gato/Controllers/client_controller.dart';
+import 'package:flor_de_gato/Controllers/movement_controller.dart';
+import 'package:flor_de_gato/Controllers/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'Controllers/ConfigsController.dart';
-import 'Controllers/RequestController.dart';
-import 'Pages/HomePage.dart';
+import 'Controllers/config_controller.dart';
+import 'Controllers/request_controller.dart';
+import 'Pages/base_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
