@@ -19,47 +19,48 @@ class ListHomeProductTile extends StatelessWidget {
         child: Card(
           color: Color(0xFF442C2E),
           child: InkWell(
-              child: Padding(
-                padding: EdgeInsets.only(left: 15,right: 10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: Column(
-                          children: [
-                            Text(product.mark, style: TextStyle(color: Color(0xFFFEDBD0)),),
-                            const SizedBox(height: 2,),
-                            Text(product.color, style: TextStyle(color: Color(0xFFFEDBD0), fontSize: 10),),
-                          ],
+            child: Padding(
+              padding: EdgeInsets.only(left: 15, right: 10),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Column(
+                      children: [
+                        Text(
+                          product?.mark == null ? "" : product.mark,
+                          style: TextStyle(color: Color(0xFFFEDBD0)),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          if (movement.quantity > 0) ...[
-                            Icon(
-                              Icons.arrow_circle_up_outlined,
-                              size: 15,
-                              color: Colors.green,
-                            ),
-                          ] else
-                            Icon(
-                              Icons.arrow_circle_down_outlined,
-                              size: 15,
-                              color: Colors.red,
-                            ),
-                          // const SizedBox(width: 4),
-                          // Text(
-                          //   movement.quantity > 0 ? movement.quantity.toString() : (movement.quantity * -1).toString(),
-                          //   style: TextStyle(fontSize: 20, color: Color(0xFFFEDBD0)),
-                          //   textAlign: TextAlign.end,
-                          // )
-                        ],
-                      ),
-                    ]
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          product?.color == null ? "" : product.mark,
+                          style: TextStyle(color: Color(0xFFFEDBD0), fontSize: 10),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (movement.quantity > 0) ...[
+                      Icon(
+                        Icons.arrow_circle_up_outlined,
+                        size: 15,
+                        color: Colors.green,
+                      ),
+                    ] else
+                      Icon(
+                        Icons.arrow_circle_down_outlined,
+                        size: 15,
+                        color: Colors.red,
+                      ),
+                  ],
+                ),
+              ]),
+            ),
           ),
         ),
       ),

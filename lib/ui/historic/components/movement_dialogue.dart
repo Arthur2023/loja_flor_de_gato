@@ -48,8 +48,7 @@ class _MovementDialogState extends State<MovementDialog> {
         color: Color(0xFFFEEAE6),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 22, 12, 25),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: ListView(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

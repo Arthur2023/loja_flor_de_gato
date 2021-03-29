@@ -14,7 +14,6 @@ class DateFormatter extends TextInputFormatter {
         if (newValue.text.length > mask.length) return oldValue;
         if (newValue.text.length < mask.length && mask[newValue.text.length - 1] == separator) {
           String value = _validateValue(oldValue.text);
-//          print(value);
 
           return TextEditingValue(
             text: '$value$separator$lastEnteredChar',
@@ -39,14 +38,13 @@ class DateFormatter extends TextInputFormatter {
 
   bool _isNumeric(String s) {
     if (s == null) return false;
-    return double.parse(s, (e) => null) != null;
+    return double.tryParse(s) != null;
   }
 
   String _validateValue(String s) {
     String result = s;
 
     if (s.length < 4) {
-      // days
       int num = int.parse(s.substring(s.length - 2));
       String raw = s.substring(0, s.length - 2);
       if (num == 0) {
@@ -57,7 +55,6 @@ class DateFormatter extends TextInputFormatter {
         result = s;
       }
     } else if (s.length < 7) {
-      // month
       int num = int.parse(s.substring(s.length - 2));
       String raw = s.substring(0, s.length - 2);
       if (num == 0) {
@@ -68,7 +65,6 @@ class DateFormatter extends TextInputFormatter {
         result = s;
       }
     } else {
-      // year
       int num = int.parse(s.substring(s.length - 4));
       String raw = s.substring(0, s.length - 4);
       if (num < 1800) {

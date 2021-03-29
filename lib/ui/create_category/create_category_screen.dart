@@ -1,7 +1,7 @@
 import 'package:flor_de_gato/Controllers/product_controller.dart';
 import 'package:flor_de_gato/models/category.dart';
-import 'package:flor_de_gato/Widgets/progress_dialogue.dart';
-import 'package:flor_de_gato/Widgets/show_snack_bar.dart';
+import 'package:flor_de_gato/ui/_commons/progress_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -73,7 +73,7 @@ class _CreateCategoryState extends State<CreateCategory> {
             if (!formkey.currentState.validate()) return;
             formkey.currentState.save();
             progressDialog(context);
-            if (!await await context.read<ProductController>().addCategory(category)) {
+            if (!await context.read<ProductController>().addCategory(category)) {
               Navigator.of(context).pop();
               showSnackBar(
                 text: "Error adding category",

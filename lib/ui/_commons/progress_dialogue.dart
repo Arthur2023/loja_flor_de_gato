@@ -4,7 +4,7 @@ void progressDialog(BuildContext context, {String text}) {
   showDialog(
     barrierDismissible: false,
     context: context,
-    child: ProgressWidget(text: text),
+    builder: (_) => ProgressWidget(text: text),
   );
 }
 

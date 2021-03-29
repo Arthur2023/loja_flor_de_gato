@@ -1,15 +1,14 @@
 import 'package:flor_de_gato/Controllers/product_controller.dart';
 import 'package:flor_de_gato/models/product.dart';
-import 'package:flor_de_gato/Pages/Creates/create_category_screen.dart';
-import 'package:flor_de_gato/Pages/Creates/create_movement_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/inventory/list_category_tile.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/commons/custom_drawer.dart';
-import 'package:flor_de_gato/Widgets/generic_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/drawer/custom_drawer.dart';
+import 'package:flor_de_gato/ui/_commons/generic_dialogue.dart';
+import 'package:flor_de_gato/ui/create_category/create_category_screen.dart';
+import 'package:flor_de_gato/ui/create_movement/create_movement_screen.dart';
+import 'components/list_category_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InventoryTab extends StatefulWidget {
-
   final PageController pageController;
 
   InventoryTab(
@@ -21,11 +20,9 @@ class InventoryTab extends StatefulWidget {
 }
 
 class _InventoryTabState extends State<InventoryTab> {
-
   Product product = Product("", "", "", 0, 0, "");
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +40,8 @@ class _InventoryTabState extends State<InventoryTab> {
           Center(
               child: Padding(
             padding: EdgeInsets.only(right: 25),
-            child: Text( context.watch<ProductController>().tot.toStringAsFixed(2) + " R\$",
+            child: Text(
+              context.watch<ProductController>().tot.toStringAsFixed(2) + " R\$",
               style: TextStyle(fontSize: 18, color: Color(0xFF442C2E)),
             ),
           ))
@@ -55,11 +53,13 @@ class _InventoryTabState extends State<InventoryTab> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                for(final category in productController.categorys)
+                for (final category in productController.categorys)
                   ListCategoryTile(
                     category: category,
                   ),
-                SizedBox(height: 90,)
+                SizedBox(
+                  height: 90,
+                )
               ],
             ),
           ),
@@ -85,8 +85,11 @@ class _InventoryTabState extends State<InventoryTab> {
                     SizedBox(
                       height: 50,
                       width: 100,
-                      child: RaisedButton(
-                        color: Color(0xFF442C2E),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                          return Color(0xFF442C2E);
+                        })),
                         child: Text("Category",
                             style: TextStyle(
                               color: Color(0xFFFEDBD0),
@@ -105,8 +108,11 @@ class _InventoryTabState extends State<InventoryTab> {
                     SizedBox(
                       height: 50,
                       width: 100,
-                      child: RaisedButton(
-                        color: Color(0xFF442C2E),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                          return Color(0xFF442C2E);
+                        })),
                         child: Text(
                           "Movement",
                           style: TextStyle(

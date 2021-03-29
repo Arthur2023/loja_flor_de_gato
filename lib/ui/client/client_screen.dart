@@ -1,7 +1,7 @@
 import 'package:flor_de_gato/Controllers/client_controller.dart';
-import 'package:flor_de_gato/Pages/Creates/create_client_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/client/list_client_tile.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/commons/custom_drawer.dart';
+import 'package:flor_de_gato/ui/_commons/drawer/custom_drawer.dart';
+import 'package:flor_de_gato/ui/create_client/create_client_screen.dart';
+import 'components/list_client_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,5 +1,6 @@
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/commons/drawer/drawer_tile.dart';
 import 'package:flutter/material.dart';
+
+import 'drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
 

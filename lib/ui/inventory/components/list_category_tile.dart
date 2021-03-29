@@ -1,6 +1,7 @@
 import 'package:flor_de_gato/models/category.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/inventory/list_product_tile.dart';
 import 'package:flutter/material.dart';
+
+import 'list_product_tile.dart';
 
 class ListCategoryTile extends StatelessWidget {
   final Category category;

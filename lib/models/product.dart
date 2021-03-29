@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flor_de_gato/Service/product_service.dart';
+import 'package:flor_de_gato/services/product_service.dart';
 
 class Product {
   String id;

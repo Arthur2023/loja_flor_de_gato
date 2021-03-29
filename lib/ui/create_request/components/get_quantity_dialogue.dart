@@ -59,20 +59,20 @@ class GetQuantityDialogue extends StatelessWidget {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
+          style: TextButton.styleFrom(primary: Colors.green[800]),
           onPressed: () {
             if (!formkey.currentState.validate()) return;
             int value = int.tryParse(quantityController.text);
             Navigator.pop(context, value);
           },
-          textColor: Colors.green[800],
           child: Text("Confirm"),
         ),
-        FlatButton(
+        TextButton(
+          style: TextButton.styleFrom(primary: Colors.red[800]),
           onPressed: () {
             Navigator.pop(context);
           },
-          textColor: Colors.red[800],
           child: Text("Cancel"),
         ),
       ],

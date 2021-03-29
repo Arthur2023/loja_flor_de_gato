@@ -1,7 +1,7 @@
 import 'package:flor_de_gato/Controllers/request_controller.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/base/home_request_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../home_request_tile.dart';
 
 class Card5 extends StatelessWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flor_de_gato/models/product.dart';
 import 'package:flor_de_gato/models/request_product.dart';
-import 'package:flor_de_gato/Service/product_service.dart';
-import 'package:flor_de_gato/Service/request_service.dart';
+import 'package:flor_de_gato/services/product_service.dart';
+import 'package:flor_de_gato/services/request_service.dart';
 import 'package:flutter/material.dart';
 
 class Request extends ChangeNotifier {

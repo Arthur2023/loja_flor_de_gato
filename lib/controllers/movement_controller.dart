@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flor_de_gato/models/movement.dart';
-import 'package:flor_de_gato/Service/movement_service.dart';
+import 'package:flor_de_gato/services/movement_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flor_de_gato/Controllers/request_controller.dart';
-import 'package:flor_de_gato/Pages/Creates/create_request_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/request/list_request_tile.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/commons/custom_drawer.dart';
+import 'package:flor_de_gato/ui/_commons/drawer/custom_drawer.dart';
+import 'package:flor_de_gato/ui/_commons/request/list_request_tile.dart';
+import 'package:flor_de_gato/ui/create_request/create_request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

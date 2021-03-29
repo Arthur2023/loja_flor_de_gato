@@ -1,13 +1,14 @@
-import 'package:flor_de_gato/Tabs/Home/card_1.dart';
-import 'package:flor_de_gato/Tabs/Home/card_2.dart';
-import 'package:flor_de_gato/Tabs/Home/card_3.dart';
-import 'package:flor_de_gato/Tabs/Home/card_4.dart';
-import 'package:flor_de_gato/Tabs/Home/card_5.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/commons/custom_drawer.dart';
+
+import 'package:flor_de_gato/ui/_commons/drawer/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'components/grid_view/cards/card_1.dart';
+import 'components/grid_view/cards/card_2.dart';
+import 'components/grid_view/cards/card_3.dart';
+import 'components/grid_view/cards/card_4.dart';
+import 'components/grid_view/cards/card_5.dart';
+import 'components/grid_view/cards/card_6.dart';
 
-import '../base/home/card_6.dart';
 
 class HomeTab extends StatelessWidget {
 

@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Controllers/config_controller.dart';
 import 'Controllers/request_controller.dart';
-import 'Pages/base_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'ui/base/base_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

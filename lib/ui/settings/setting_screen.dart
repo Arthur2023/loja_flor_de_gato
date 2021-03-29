@@ -1,5 +1,6 @@
-import 'package:flor_de_gato/Pages/Settings/price_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/commons/custom_drawer.dart';
+
+import 'package:flor_de_gato/ui/_commons/drawer/custom_drawer.dart';
+import 'package:flor_de_gato/ui/settings/price/price_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsTab extends StatelessWidget {
@@ -26,8 +27,14 @@ class SettingsTab extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
             child: SizedBox(
               height: 60,
-              child: RaisedButton(
-                color:Color(0xFFFEDBD0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states){
+                  return Color(0xFFFEDBD0);
+                  }
+                  ),
+                ),
                 child: Text(
                   "Price",
                   style: TextStyle(color: Color(0xFF442C2E), fontSize: 20),

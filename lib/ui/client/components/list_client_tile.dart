@@ -1,5 +1,5 @@
 import 'package:flor_de_gato/models/client.dart';
-import 'package:flor_de_gato/Pages/Creates/create_client_screen.dart';
+import 'package:flor_de_gato/ui/create_client/create_client_screen.dart';
 import 'package:flutter/material.dart';
 
 class ListClientTile extends StatelessWidget {

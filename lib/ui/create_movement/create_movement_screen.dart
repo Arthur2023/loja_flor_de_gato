@@ -1,10 +1,10 @@
 import 'package:flor_de_gato/Controllers/product_controller.dart';
 import 'package:flor_de_gato/models/category.dart';
 import 'package:flor_de_gato/models/product.dart';
-import 'package:flor_de_gato/Pages/Search/category_search_screen.dart';
-import 'package:flor_de_gato/Pages/Search/product_search_screen.dart';
-import 'package:flor_de_gato/Widgets/progress_dialogue.dart';
-import 'package:flor_de_gato/Widgets/show_snack_bar.dart';
+import 'package:flor_de_gato/ui/_commons/progress_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/show_snack_bar.dart';
+import 'package:flor_de_gato/ui/search_category/category_search_screen.dart';
+import 'package:flor_de_gato/ui/search_product/product_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -347,14 +347,18 @@ class _CreateMovementState extends State<CreateMovement> {
                   height: 45,
                   child: widget.editing
                       ? null
-                      : RaisedButton(
-                    shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      : ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) => Color(0xFF442C2E)),
+                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                    elevation: MaterialStateProperty.all(5)),
                           child: Text(
                             "Save",
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
-                          color: Color(0xFF442C2E),
-                          elevation: 5,
                           onPressed: () async {
                             if (!formkey.currentState.validate()) return;
                             formkey.currentState.save();

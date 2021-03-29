@@ -1,5 +1,5 @@
 import 'package:flor_de_gato/models/configs.dart';
-import 'package:flor_de_gato/Service/config_service.dart';
+import 'package:flor_de_gato/services/config_service.dart';
 import 'package:flutter/cupertino.dart';
 
 class ConfigsController extends ChangeNotifier {

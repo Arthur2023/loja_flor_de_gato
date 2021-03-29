@@ -49,16 +49,16 @@ class GenericDialog extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
+          style: TextButton.styleFrom(primary: submitButtonColor),
           onPressed: () {
             onSubmit();
           },
-          textColor: submitButtonColor,
           child: Text(submitButtonText),
         ),
-        FlatButton(
+        TextButton(
+          style: TextButton.styleFrom(primary: dismissButtonColor),
           onPressed: onDismiss,
-          textColor: dismissButtonColor,
           child: Text(dismissButtonText),
         ),
       ],

@@ -1,10 +1,10 @@
 
 import 'package:flor_de_gato/Controllers/client_controller.dart';
+import 'package:flor_de_gato/helpers/validators.dart';
 import 'package:flor_de_gato/models/client.dart';
-import 'package:flor_de_gato/Widgets/generic_dialogue.dart';
-import 'package:flor_de_gato/Widgets/progress_dialogue.dart';
-import 'package:flor_de_gato/Widgets/show_snack_bar.dart';
-import 'package:flor_de_gato/Widgets/validators.dart';
+import 'package:flor_de_gato/ui/_commons/generic_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/progress_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -126,7 +126,7 @@ class _CreateClientState extends State<CreateClient> {
                         dismissButtonText: "Gallery",
                         dismissButtonColor: Colors.blue,
                         onDismiss: () {
-                          ImagePicker.pickImage(source: ImageSource.gallery)
+                          ImagePicker().getImage(source: ImageSource.gallery)
                               .then((file) {
                             if (file == null) return;
                             client.changeImage(file);

@@ -1,7 +1,7 @@
 import 'package:flor_de_gato/Controllers/product_controller.dart';
 import 'package:flor_de_gato/models/category.dart';
 import 'package:flor_de_gato/models/product.dart';
-import 'package:flor_de_gato/Pages/Creates/create_movement_screen.dart';
+import 'package:flor_de_gato/ui/create_movement/create_movement_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

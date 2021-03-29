@@ -1,6 +1,6 @@
 import 'package:flor_de_gato/models/month_value.dart';
 import 'package:flor_de_gato/models/request.dart';
-import 'package:flor_de_gato/Service/request_service.dart';
+import 'package:flor_de_gato/services/request_service.dart';
 import 'package:flutter/cupertino.dart';
 
 class RequestController extends ChangeNotifier {

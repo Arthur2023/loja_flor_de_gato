@@ -2,10 +2,11 @@ import 'package:flor_de_gato/Controllers/movement_controller.dart';
 import 'package:flor_de_gato/Controllers/product_controller.dart';
 import 'package:flor_de_gato/models/movement.dart';
 import 'package:flor_de_gato/models/product.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/historic/movement_dialogue.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'movement_dialogue.dart';
 
 class ListMovementTile extends StatelessWidget {
   final Movement movement;

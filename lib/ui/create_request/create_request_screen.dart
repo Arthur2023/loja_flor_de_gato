@@ -2,23 +2,24 @@ import 'package:flor_de_gato/Controllers/client_controller.dart';
 import 'package:flor_de_gato/Controllers/config_controller.dart';
 import 'package:flor_de_gato/Controllers/product_controller.dart';
 import 'package:flor_de_gato/Controllers/request_controller.dart';
+import 'package:flor_de_gato/helpers/date_formatter.dart';
+import 'package:flor_de_gato/helpers/validators.dart';
 import 'package:flor_de_gato/models/client.dart';
 import 'package:flor_de_gato/models/configs.dart';
 import 'package:flor_de_gato/models/product.dart';
 import 'package:flor_de_gato/models/request.dart';
 import 'package:flor_de_gato/models/request_product.dart';
-import 'package:flor_de_gato/Pages/Creates/create_client_screen.dart';
-import 'package:flor_de_gato/Pages/Search/client_search_screen.dart';
-import 'package:flor_de_gato/Pages/Search/product_search_screen.dart';
-import 'package:flor_de_gato/Widgets/date_formatter.dart';
-import 'package:flor_de_gato/Widgets/generic_dialogue.dart';
-import 'package:flor_de_gato/Widgets/progress_dialogue.dart';
-import 'package:flor_de_gato/Widgets/show_snack_bar.dart';
-import 'package:flor_de_gato/Widgets/validators.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/request/get_quantity_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/generic_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/progress_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/show_snack_bar.dart';
+import 'package:flor_de_gato/ui/create_client/create_client_screen.dart';
+import 'package:flor_de_gato/ui/search_client/client_search_screen.dart';
+import 'package:flor_de_gato/ui/search_product/product_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import 'components/get_quantity_dialogue.dart';
 
 class CreateRequest extends StatefulWidget {
   final Request request;
@@ -371,7 +372,7 @@ class _CreateRequestState extends State<CreateRequest> {
                                             child: InkWell(
                                               child: SizedBox(
                                                 height: 35,
-                                                child: RaisedButton(
+                                                child: ElevatedButton(
                                                   onPressed: () async {
                                                     Product aux = (await Navigator.push(
                                                       context,
@@ -396,7 +397,11 @@ class _CreateRequestState extends State<CreateRequest> {
                                                       request.addRequestProduct(rp);
                                                     }
                                                   },
-                                                  color: Color(0xFF442C2E),
+                                                  style: ButtonStyle(backgroundColor:
+                                                      MaterialStateProperty.resolveWith<Color>(
+                                                          (Set<MaterialState> states) {
+                                                    return Color(0xFF442C2E);
+                                                  })),
                                                   child: Text(
                                                     "Add more",
                                                     style: TextStyle(
@@ -493,13 +498,18 @@ class _CreateRequestState extends State<CreateRequest> {
                                 Expanded(
                                   child: SizedBox(
                                     height: 45,
-                                    child: RaisedButton(
-                                        shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                              (Set<MaterialState> states) => Color(0xFF442C2E)),
+                                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                                            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                          ),
+                                        ),
                                         child: Text(
                                           "Cancel",
                                           style: TextStyle(color: Color(0xFFFEEAE6), fontSize: 18),
                                         ),
-                                        color: Color(0xFF442C2E),
                                         onPressed: () {
                                           if (widget.editing) {
                                             showDialog(
@@ -540,13 +550,18 @@ class _CreateRequestState extends State<CreateRequest> {
                                 Expanded(
                                   child: SizedBox(
                                     height: 45,
-                                    child: RaisedButton(
-                                      shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                            (Set<MaterialState> states) => Color(0xFF442C2E)),
+                                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                        ),
+                                      ),
                                       child: Text(
                                         "Save",
                                         style: TextStyle(color: Color(0xFFFEEAE6), fontSize: 18),
                                       ),
-                                      color: Color(0xFF442C2E),
                                       onPressed: () async {
                                         if (!formkey.currentState.validate()) return;
                                         formkey.currentState.save();
@@ -585,16 +600,22 @@ class _CreateRequestState extends State<CreateRequest> {
                           if (widget.editing && request.isOpen)
                             SizedBox(
                               height: 50,
-                              child: OutlineButton(
-                                  color: Colors.green[600],
+                              child: OutlinedButton(
+                                  style: ButtonStyle(
+                                      side: MaterialStateProperty.all<BorderSide>(
+                                        BorderSide(
+                                          color: Colors.green[600],
+                                        ),
+                                      ),
+                                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                          (Set<MaterialState> states) => Colors.green[600]),
+                                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      )),
                                   child: Text(
                                     "Conclude",
                                     style: TextStyle(color: Colors.green[800], fontSize: 20),
                                   ),
-                                  borderSide: BorderSide(
-                                    color: Colors.green[600],
-                                  ),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   onPressed: () async {
                                     progressDialog(context);
                                     if (!formkey.currentState.validate()) return;

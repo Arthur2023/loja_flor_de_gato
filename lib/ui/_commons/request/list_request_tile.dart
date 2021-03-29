@@ -2,7 +2,7 @@ import 'package:flor_de_gato/Controllers/client_controller.dart';
 import 'package:flor_de_gato/Controllers/config_controller.dart';
 import 'package:flor_de_gato/models/client.dart';
 import 'package:flor_de_gato/models/request.dart';
-import 'package:flor_de_gato/Pages/Creates/create_request_screen.dart';
+import 'package:flor_de_gato/ui/create_request/create_request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

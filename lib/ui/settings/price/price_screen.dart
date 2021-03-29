@@ -1,6 +1,6 @@
 import 'package:flor_de_gato/Controllers/config_controller.dart';
-import 'package:flor_de_gato/Widgets/progress_dialogue.dart';
-import 'package:flor_de_gato/Widgets/show_snack_bar.dart';
+import 'package:flor_de_gato/ui/_commons/progress_dialogue.dart';
+import 'package:flor_de_gato/ui/_commons/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -107,8 +107,11 @@ class _PriceScreenState extends State<PriceScreen> {
               const SizedBox(height: 35),
               SizedBox(
                 height: 40,
-                child: RaisedButton(
-                  color: Color(0xFF442C2E),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                    return Color(0xFF442C2E);
+                  })),
                   child: Text(
                     "Save",
                     style: TextStyle(color: Colors.white, fontSize: 20),

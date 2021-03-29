@@ -1,13 +1,13 @@
 import 'package:flor_de_gato/models/product.dart';
 import 'package:flor_de_gato/models/request.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/client/client_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/historic/historic_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/inventory/inventory_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/request/request_screen.dart';
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/screens/Settings/setting_screen.dart';
+import 'package:flor_de_gato/ui/client/client_screen.dart';
+import 'package:flor_de_gato/ui/historic/historic_screen.dart';
+import 'package:flor_de_gato/ui/home/home_screen.dart';
+import 'package:flor_de_gato/ui/inventory/inventory_screen.dart';
+import 'package:flor_de_gato/ui/request/request_screen.dart';
+import 'package:flor_de_gato/ui/settings/setting_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'file:///C:/Users/Usuario/Desktop/ProjetosUdemy/Pessoais/flor_de_gato/lib/Tabs/Home/home_screen.dart';
 
 class HomePage extends StatelessWidget {
 

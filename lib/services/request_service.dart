@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flor_de_gato/Controllers/product_controller.dart';
-import 'package:flor_de_gato/Service/product_service.dart';
 import 'package:flor_de_gato/models/request.dart';
 import 'package:flor_de_gato/models/request_product.dart';
+import 'package:flor_de_gato/services/product_service.dart';
 
 class RequestService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -51,7 +51,6 @@ class RequestService {
         p.id = (await productsReference.add(p.toMap())).id;
         print('ADDPRODUCT');
       } catch (e) {
-        //TODO: Excluir produtos ja adicionados - fazer transacao
         print(e);
         return false;
       }
@@ -65,7 +64,6 @@ class RequestService {
         p.product.quantity += p.quantity;
         await ProductService().update(p.product);
       } catch (e) {
-        //TODO: Excluir produtos ja adicionados - fazer transacao
         return false;
       }
     } await collectionReference.doc(r.id).delete();

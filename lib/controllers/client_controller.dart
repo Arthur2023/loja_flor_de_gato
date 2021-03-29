@@ -1,5 +1,5 @@
 import 'package:flor_de_gato/models/client.dart';
-import 'package:flor_de_gato/Service/client_service.dart';
+import 'package:flor_de_gato/services/client_service.dart';
 import 'package:flutter/material.dart';
 
 class ClientController extends ChangeNotifier {
