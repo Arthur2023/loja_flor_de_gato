@@ -126,7 +126,7 @@ class _CreateClientState extends State<CreateClient> {
                         dismissButtonText: "Gallery",
                         dismissButtonColor: Colors.blue,
                         onDismiss: () {
-                          ImagePicker().getImage(source: ImageSource.gallery)
+                          ImagePicker.pickImage(source: ImageSource.gallery)
                               .then((file) {
                             if (file == null) return;
                             client.changeImage(file);
